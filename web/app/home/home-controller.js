@@ -1,8 +1,8 @@
 (function () {
 
-    angular.module('multipleSelect').controller('homeController', function ($scope) {
+    angular.module('multiSelectAutocomplete').controller('homeController', function ($scope) {
         $scope.apiPath = "web/resources/skills.json";
-
+        $scope.skills = [];
         $scope.skillsList = [
             {id: 1, name : "Java"},
             {id: 2, name : "C"},
@@ -16,6 +16,7 @@
             {id: 10, name : "Bootstrap"}
         ];
         $scope.placeholder = 'Apple'
+        $scope.objectProperty = 'name'
         $scope.skillsList1 = [
             "Java",
             "C",

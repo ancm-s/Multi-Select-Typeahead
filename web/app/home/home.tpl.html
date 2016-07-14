@@ -5,21 +5,22 @@
     <hr/>
     <div class="mrg-top50">
         <label>1. Autocomplete field - options list as array of objects</label>
-        <multiple-autocomplete ng-model="skills"
+        <multi-autocomplete ng-model="skills"
                                placeholder="placeholder"
-                               object-property="name",
+                               object-property="objectProperty",
                                multiple="2"
                                suggestions-arr="skillsList">
-        </multiple-autocomplete>
+        </multi-autocomplete>
         <label>Selected Model Value :<br/></label>{{skills}}
     </div>
 
     <div class="mrg-top50">
         <label>2. Autocomplete field - options as list of strings</label>
-        <multiple-autocomplete ng-model="skills1"
+        <multi-autocomplete ng-model="skills1"
                                suggestions-arr="skillsList1"
+                               clear-all="true"
                                disable="false">
-        </multiple-autocomplete>
+        </multi-autocomplete>
         <label>Selected Model Value :<br/></label>{{skills1}}
     </div>
 
@@ -27,9 +28,9 @@
         <form name="multipleSelectForm" novalidate>
             <div ng-class="{'has-error' : multipleSelectForm.multipleSelect.$invalid && multipleSelectForm.multipleSelect.$dirty, 'has-success' : !multipleSelectForm.multipleSelect.$invalid && multipleSelectForm.multipleSelect.$dirty}">
                 <label>3. Making it Required field in a Form</label>
-                <multiple-autocomplete ng-model="skills2" name="multipleSelect" required="true"
+                <multi-autocomplete ng-model="skills2" name="multipleSelect" required="true"
                                        suggestions-arr="skillsList1">
-                </multiple-autocomplete>
+                </multi-autocomplete>
                 <span ng-show="multipleSelectForm.multipleSelect.$invalid && multipleSelectForm.multipleSelect.$dirty" class="ng-hide">
                     <p class="error-msg" ng-show="multipleSelectForm.multipleSelect.$error.required">Please select something from multiple select field</p>
                 </span>
@@ -41,11 +42,11 @@
 
     <div class="mrg-top50">
         <label>4. Fetching options list from 3rd party api/url</label>
-        <multiple-autocomplete ng-model="skillsFromApi"
+        <multi-autocomplete ng-model="skillsFromApi"
                                css-class="someClass"
                                api-url="{{apiPath}}"
                                suggestions-arr="">
-        </multiple-autocomplete>
+        </multi-autocomplete>
         <label>Selected Model Value :<br/></label>{{skillsFromApi}}
     </div>
 </div>

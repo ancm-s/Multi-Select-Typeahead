@@ -37,7 +37,7 @@ gulp.task('watch', function () {
 
 gulp.task('cacheTemplate', function () {
   gulp.src([
-      './web/app/directives/multiple-autocomplete-field/multiple-autocomplete-tpl.html'
+      './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.html'
     ])
     .pipe(templateCache("templates.js", {
       module: 'templates',
@@ -74,7 +74,7 @@ gulp.task('build', ['copy', 'cssminify', 'cacheTemplate', 'jsminify'], function 
   return gulp.src([
       './web/app/templates/templates.js',
       './web/app/app.js',
-      './web/app/directives/multiple-autocomplete-field/multiple-autocomplete-field.js'
+      './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.js'
     ])
     .pipe(concat('multiple-select.js'))
     .pipe(gulp.dest('./build/'));

@@ -1,6 +1,6 @@
 (function () {
     //declare all modules and their dependencies.
-    angular.module('multipleSelect', [
+    angular.module('multiSelectAutocomplete', [
         'templates'
     ]).config(function () {
 
