@@ -3,15 +3,17 @@
   angular.module('multipleSelect').directive('multipleAutocomplete', [
     '$filter',
     '$http',
-    function ($filter, $http) {
+    '$log',
+    function ($filter, $http, $log) {
       return {
         restrict: 'EA',
         scope: {
-          suggestionsArr: '=',
+          placeholder: '=?',
           modelArr: '=ngModel',
-          apiUrl: '@',
-          disable: '=',
-          canSelect: '='
+          apiUrl: '@?',
+          suggestionsArr: '=?',
+          disable: '=?',
+          multiple: '=?'
         },
         templateUrl: 'app/directives/multiple-autocomplete-field/multiple-autocomplete-tpl.html',
         link: function (scope, element, attr) {
@@ -26,15 +28,15 @@
           scope.showOptionList = true;
           var getSuggestionsList = function () {
             var url = scope.apiUrl;
-            console.log(url);
+            $log.log(url);
             $http({
               method: 'GET',
               url: url
             }).then(function (response) {
-              console.log(response);
+              $log.log(response);
               scope.suggestionsArr = response.data;
             }, function (response) {
-              console.log("*****Angular-multiple-select **** ----- Unable to fetch list");
+              $log.log("*****Angular-multiple-select **** ----- Unable to fetch list");
             });
           };
 
@@ -42,7 +44,7 @@
             if (scope.apiUrl != null && scope.apiUrl != "")
               getSuggestionsList();
             else {
-              console.log("*****Angular-multiple-select **** ----- Please provide suggestion array list or url");
+              $log.log("*****Angular-multiple-select **** ----- Please provide suggestion array list or url");
             }
           }
 
@@ -101,8 +103,8 @@
           };
 
           scope.onSuggestedItemsClick = function (selectedValue) {
-            if (scope.canSelect != null && scope.canSelect != "") {
-              if (scope.modelArr.length < scope.canSelect) {
+            if (scope.multiple != null && scope.multiple != "") {
+              if (scope.modelArr.length < scope.multiple) {
                 scope.modelArr.push(selectedValue);
                 scope.inputValue = "";
               }
@@ -142,9 +144,9 @@
           };
 
           function shouldShowInput() {
-            if (scope.canSelect != null && scope.canSelect != "") {
-              scope.showInput = scope.modelArr.length >= scope.canSelect ? false : true;
-              scope.showOptionList = scope.modelArr.length >= scope.canSelect ? false : true;
+            if (scope.multiple != null && scope.multiple != "") {
+              scope.showInput = scope.modelArr.length >= scope.multiple ? false : true;
+              scope.showOptionList = scope.modelArr.length >= scope.multiple ? false : true;
             } else {
               scope.showInput = scope.modelArr.length === scope.suggestionsArr.length ? false : true;
               scope.showOptionList = scope.modelArr.length === scope.suggestionsArr.length ? false : true;

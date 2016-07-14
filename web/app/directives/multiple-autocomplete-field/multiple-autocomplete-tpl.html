@@ -18,7 +18,7 @@
             <input
                 name="{{name}}"
                 ng-model="inputValue"
-                placeholder=""
+                placeholder="{{placeholder}}"
                 class="select_input"
                 ng-keydown="keyParser($event)"
                 err-msg-required="{{errMsgRequired}}"
@@ -32,7 +32,7 @@
 
     </ul>
 
-    <div ng-if="showOptionList" class="autocomplete-list" ng-show="isFocused || isHover" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()">
+    <div ng-if="showOptionList && suggestionsArr" class="autocomplete-list" ng-show="isFocused || isHover" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()">
         <ul>
             <li ng-class="{'autocomplete-active' : selectedItemIndex == $index}"
             ng-repeat="suggestion in suggestionsArr | filter : inputValue | filter : alreadyAddedValues"
