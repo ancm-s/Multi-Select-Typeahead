@@ -3,8 +3,8 @@
     "version": "v1.0.0",
     "description": "A complete Angularjs directive for multiple selection with suggestion list && autocomplete.",
     "main": [
-        "build/multiple-select.min.js",
-        "build/multiple-select.min.css"
+        "dist/multiple-select.min.js",
+        "dist/multiple-select.min.css"
     ],
     "scripts": {
         "test": "npm install && npm run build && node_modules/karma/bin/karma start karma.conf.js",

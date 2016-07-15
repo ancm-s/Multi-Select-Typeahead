@@ -5,7 +5,7 @@ module.exports = function(karma){
     frameworks: ['angular', 'jasmine-jquery','jasmine', 'mocha'],
 
     files: [
-      "build/multiple-select.js",
+      "dist/multiple-select.js",
       "test/multi-select-autocomplete_spec.js"
     ],
 

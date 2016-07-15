@@ -28,13 +28,13 @@ gulp.task('watch', function () {
 
 gulp.task('cacheTemplate', function () {
   gulp.src([
-      './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.html'
+      './src/multi-select-autocomplete.html'
     ])
     .pipe(templateCache("templates.js", {
       module: 'templates',
       standalone: true
     }))
-    .pipe(gulp.dest('./web/app/templates/'));
+    .pipe(gulp.dest('./src/'));
 });
 
 gulp.task('cssminify', function () {
@@ -43,38 +43,38 @@ gulp.task('cssminify', function () {
     .pipe(rename('multiple-select.min.css', {
       suffix: '.min'
     }))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('jsminify', function () {
-  gulp.src('./build/multiple-select.js')
+  gulp.src('./dist/multiple-select.js')
     .pipe(jsmin())
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('copy-scss', function () {
   gulp.src('./web/styles/styles.scss')
     .pipe(rename('multiple-select.scss'))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('copy-html', function () {
-  gulp.src('./web/app/directives/multi-select-autocomplete/multi-select-autocomplete.html')
+  gulp.src('./src/multi-select-autocomplete.html')
     .pipe(rename('multi-select-autocomplete.html'))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
   return gulp.src([
-    './web/app/templates/templates.js',
+    './src/templates.js',
       './web/app/app.js',
-      './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.js'
+      './src/multi-select-autocomplete.js'
     ])
     .pipe(concat('multiple-select.js'))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 // Static server
