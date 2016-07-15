@@ -64,17 +64,24 @@ gulp.task('jsminify', function () {
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('copy', function () {
-  gulp.src('./web/styles/styles.css')
-    .pipe(rename('multiple-select.css'))
+gulp.task('copy-scss', function () {
+  gulp.src('./web/styles/styles.scss')
+    .pipe(rename('multiple-select.scss'))
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('build', ['copy', 'cssminify', 'cacheTemplate', 'jsminify'], function () {
+gulp.task('copy-html', function () {
+  gulp.src('./web/app/directives/multi-select-autocomplete/multi-select-autocomplete.html')
+    .pipe(rename('multi-select-autocomplete.html'))
+    .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
   return gulp.src([
-      './web/app/templates/templates.js',
+    './web/app/templates/templates.js',
       './web/app/app.js',
       './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.js'
+
     ])
     .pipe(concat('multiple-select.js'))
     .pipe(gulp.dest('./build/'));
