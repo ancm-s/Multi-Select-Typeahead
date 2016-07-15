@@ -1,6 +1,5 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
-  bowerFiles = require('main-bower-files'),
   inject = require('gulp-inject'),
   stylus = require('gulp-stylus'),
   es = require('event-stream'),
@@ -17,14 +16,6 @@ gulp.task('styles', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./web/'))
 });
-
-//gulp.task('inject', function() {
-//	console.log(bowerFiles());
-//	return gulp.src('./web/index.html')
-//	.pipe(inject(gulp.src(bowerFiles(), {read: false}), {name: 'bower'}))
-//	.pipe(inject(gulp.src(['web/app/app.js', 'web/app/routes/routes.js'],{read: false})))
-//	.pipe(gulp.dest('./web'));
-//});
 
 gulp.task('watch', function () {
   livereload.listen();
@@ -81,30 +72,19 @@ gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], func
     './web/app/templates/templates.js',
       './web/app/app.js',
       './web/app/directives/multi-select-autocomplete/multi-select-autocomplete.js'
-
     ])
     .pipe(concat('multiple-select.js'))
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('inject', function () {
-  gulp.src('./web/index.html')
-    .pipe(inject(gulp.src(bowerFiles(), {
-      read: false
-    }), {
-      name: 'bower'
-    }))
-    .pipe(gulp.dest('./web'));
-});
 // Static server
-gulp.task('serve', ['inject', 'watch'], function () {
+gulp.task('serve', ['watch'], function () {
   browserSync.init({
     server: {
-      baseDir: "./web",
+      baseDir: "./",
       routes: {
-        "/bower_components": "bower_components",
-        "/static": "static",
-        "/web": "web"
+        "static": "static",
+        "web": "web"
       }
     },
     port: 5000
