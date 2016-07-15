@@ -1,37 +1,27 @@
 {
-  "name": "angular-multiple-select",
-  "version": "v1.1.1",
-  "description": "A complete Angularjs directive for multiple selection with suggestion list, like skills, locations etc.",
+  "name": "multi-select-autocomplete",
+  "version": "v1.0.0",
+  "description": "A complete Angularjs directive for multiple selection with suggestion list && autocomplete.",
   "main": [
     "build/multiple-select.min.js",
     "build/multiple-select.min.css"
   ],
   "scripts": {
-    "test": "npm install && node_modules/karma/bin/karma start karma.conf.js",
-    "build": "node-sass --include-path scss src/pill-toggle.scss dist/pill-toggle.css"
+    "test": "npm install && npm build && node_modules/karma/bin/karma start karma.conf.js",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jagdeepsingh91/angularMultipleSelect.git"
   },
   "keywords": [
-    "angular",
-    "angular multiple select",
     "multiple",
     "select",
     "angular",
     "autocomplete",
-    "selection",
-    "multiple",
-    "select",
     "field"
   ],
-  "author": "Jagdeep Singh",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jagdeepsingh91/angularMultipleSelect/issues"
-  },
-  "homepage": "https://github.com/jagdeepsingh91/angularMultipleSelect#readme",
+  "author": "Faisal Nawaz",
   "dependencies": {
   },
   "devDependencies": {

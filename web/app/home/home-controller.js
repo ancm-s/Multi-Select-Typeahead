@@ -15,8 +15,8 @@
             {id: 9, name : "Angular Js"},
             {id: 10, name : "Bootstrap"}
         ];
-        $scope.placeholder = 'Apple'
-        $scope.objectProperty = 'name'
+        $scope.placeholder = 'Apple';
+        $scope.objectProperty = 'name';
         $scope.skillsList1 = [
             "Java",
             "C",
