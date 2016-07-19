@@ -42,7 +42,8 @@ angular.module("templates", []).run(["$templateCache", function($templateCache) 
         disable: '=?',
         multiple: '=?',
         clearAll: '=?',
-        closeOnSelect: '=?'
+        closeOnSelect: '=?',
+        sortBy: '=?'
       },
       bindToController: true,
       templateUrl: 'multi-select-autocomplete.html',
@@ -92,6 +93,9 @@ angular.module("templates", []).run(["$templateCache", function($templateCache) 
       else {
         $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
       }
+    }
+    if (vm.sortBy && vm.sortBy !== "") {
+      vm.suggestionsArr = $filter('orderBy')(vm.suggestionsArr, vm.sortBy);
     }
 
     /**

@@ -13,13 +13,13 @@ describe('multi-Autocomplete', function () {
     compile = $compile;
   }));
 
-  describe('when options are provided', function () {
+  describe('when non required options are provided', function () {
     beforeEach(function () {
       scope.selectedPlans = [];
-      scope.plans = ["Awesome Plan", "Not so Awesome Plan", "sucky Plan"];
+      scope.plans = ["Awesome Plan",  "Sucky Plan", "Not so Awesome Plan"];
       scope.placeholder = 'give it up';
       scope.disabled = false;
-      html = '  <multi-autocomplete ng-model="selectedPlans" placeholder="placeholder" suggestions-arr="plans" clear-all="true" disable="disabled" name="multipleSelect"></multi-autocomplete>';
+      html = '  <multi-autocomplete ng-model="selectedPlans" sort-by="true" placeholder="placeholder" suggestions-arr="plans" clear-all="true" disable="disabled" name="multipleSelect"></multi-autocomplete>';
       compileElement(html);
     });
 
@@ -39,6 +39,11 @@ describe('multi-Autocomplete', function () {
       expect(element.find('input')).toHaveAttr('disabled', 'disabled');
     });
 
+    it('should order the array or strings', function () {
+      expect(element.find('.autocomplete-list').find('li')[0]).toContainText("Awesome Plan");
+      expect(element.find('.autocomplete-list').find('li')[2]).toContainText("Sucky Plan");
+    });
+
     it('autocomplete-list dropdown should contain same number of options as skill list', function () {
       expect(element.find('.autocomplete-list').find('li').length).toEqual(scope.plans.length);
       scope.plans.pop();
@@ -50,6 +55,7 @@ describe('multi-Autocomplete', function () {
   describe('when objectProperty is provided and plan is array of objects', function () {
     beforeEach(function () {
       scope.selectedPlans = [];
+      scope.orderBy = 'name';      
       scope.plans = [{
         name: "Awesome Plan",
         id: 1
@@ -59,11 +65,14 @@ describe('multi-Autocomplete', function () {
       }, {
         name: "Sucky Plan",
         id: 3
+      }, {
+        id: 4,
+        name: "Alpha Plan"
       }];
       scope.placeholder = 'give it up';
       scope.objectProperty = 'name';
       scope.disabled = false;
-      html = '  <multi-autocomplete ng-model="selectedPlans" object-property="objectProperty" placeholder="placeholder" suggestions-arr="plans" clear-all="true" disable="disabled" name="multipleSelect"></multi-autocomplete>';
+      html = '  <multi-autocomplete ng-model="selectedPlans" sort-by="orderBy" object-property="objectProperty" placeholder="placeholder" suggestions-arr="plans" clear-all="true" disable="disabled" name="multipleSelect"></multi-autocomplete>';
       compileElement(html);
     });
 
@@ -74,6 +83,10 @@ describe('multi-Autocomplete', function () {
       expect(scope.selectedPlans[0]).toEqual(scope.plans[0]);
       expect(element.find('.autocomplete-list').find('li')[0]).not.toContainText(scope.plans[0].name);
       expect(element.find('.autocomplete-list').find('li')[0]).not.toContainText(scope.plans[0].id);
+    });
+    it('should order by the property name provided', function () {
+      expect(element.find('.autocomplete-list').find('li')[0]).toContainText("Alpha Plan");
+      expect(element.find('.autocomplete-list').find('li')[3]).toContainText("Sucky Plan");
     });
 
   });

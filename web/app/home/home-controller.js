@@ -4,33 +4,31 @@
         $scope.apiPath = "web/resources/skills.json";
         $scope.skills = [];
         $scope.skillsList = [
-            {id: 1, name : "Java"},
-            {id: 2, name : "C"},
-            {id: 3, name : "C++"},
-            {id: 4, name : "Core Java"},
-            {id: 5, name : "JavaScript"},
-            {id: 6, name : "PHP"},
-            {id: 7, name : "HTML"},
-            {id: 8, name : "CSS"},
-            {id: 9, name : "Angular Js"},
-            {id: 10, name : "Bootstrap"}
+            {id: 1, name : "plan A"},
+            {id: 2, name : "Plan B"},
+            {id: 3, name : "Plan C"},
+            {id: 4, name : "Plan D"},
+            {id: 5, name : "My awesome Plan"},
+            {id: 6, name : "Not So Awesome Plan"},
+            {id: 7, name : "Plan it"},
+            {id: 8, name : "New Plan"},
+            {id: 9, name : "New Plan A"},
+            {id: 10, name : "Bootstrap Plan"}
         ];
-        $scope.placeholder = 'Apple';
+        $scope.placeholder = 'Select An plan';
+        $scope.sortBy= 'name';
         $scope.objectProperty = 'name';
         $scope.skillsList1 = [
-            "Java",
-            "C",
-            "C++",
-            "Core Java",
-            "Javascript",
-            "PHP",
-            "MySql",
-            "Hibernate",
-            "Spring",
-            "AngularJs",
-            "BackboneJs",
-            "Sencha Touch",
-            "ExtJs"
+            "plan A",
+            "Plan B",
+            "Plan C",
+            "Plan D",
+            "My awesome Plan",
+            "Not So Awesome Plan",
+            "Plan it",
+            "New Plan",
+            "New Plan A",
+            "Bootstrap Plan"
         ];
 
         $scope.onSubmit = function () {

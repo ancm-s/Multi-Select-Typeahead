@@ -31,7 +31,8 @@
         disable: '=?',
         multiple: '=?',
         clearAll: '=?',
-        closeOnSelect: '=?'
+        closeOnSelect: '=?',
+        sortBy: '=?'
       },
       bindToController: true,
       templateUrl: 'multi-select-autocomplete.html',
@@ -75,12 +76,15 @@
       vm.modelArr = [];
     }
 
-    if (vm.suggestionsArr == null || vm.suggestionsArr == "") {
-      if (vm.apiUrl != null && vm.apiUrl != "")
+    if (!vm.suggestionsArr || vm.suggestionsArr === "") {
+      if (vm.apiUrl && vm.apiUrl !== "")
         getSuggestionsList();
       else {
         $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
       }
+    }
+    if (vm.sortBy && vm.sortBy !== "") {
+      vm.suggestionsArr = $filter('orderBy')(vm.suggestionsArr, vm.sortBy);
     }
 
     /**
@@ -91,9 +95,9 @@
      * @returns {*}
      */
     vm.removeAddedValues = function (selectedValue) {
-      if (vm.modelArr != null && vm.modelArr != "") {
+      if (vm.modelArr && vm.modelArr !== "") {
         var selectedValueIndex = vm.modelArr.indexOf(selectedValue);
-        if (selectedValueIndex != -1)
+        if (selectedValueIndex !== -1)
           vm.modelArr.splice(selectedValueIndex, 1);
       }
       shouldShowInput();
@@ -196,7 +200,7 @@
 
     /***** Private Helper methods *****/
     function shouldShowInput() {
-      if (vm.multiple != null && vm.multiple != "") {
+      if (vm.multiple && vm.multiple !== "") {
         vm.showInput = vm.modelArr.length >= vm.multiple ? false : true;
         vm.showOptionList = vm.modelArr.length >= vm.multiple ? false : true;
       } else {
