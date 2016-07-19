@@ -9,7 +9,8 @@
     },
     "files": [
         "dist/multiple-select.scss",
-        "dist/multiple-select.css"
+        "dist/multiple-select.css",
+        "test/multi-select-autocomplete_spec.js"
     ],
     "repository": {
         "type": "git",

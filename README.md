@@ -18,11 +18,11 @@ $ npm install --save git+https://github.com/CINBCUniversal/Multi-Select-Typeahea
 
 After installation include its 
 ```html
-@import node_modules/multi-select-typeahead/dist/multiple-select.scss
+@import node_modules/multi-select-autocomplete/dist/multiple-select.scss
 multiple-select.min.css AND
 multiple-select.min.js
-<script src="node_modules/multi-select-typeahead/dist/multiple-select.min.js"></script>
-<link href="node_modules/multi-select-typeahead/dist/multiple-select.min.css" rel="stylesheet">
+<script src="node_modules/multi-select-autocomplete/dist/multiple-select.min.js"></script>
+<link href="node_modules/multi-select-autocomplete/dist/multiple-select.min.css" rel="stylesheet">
 ```
 in your html. Then,
 
@@ -174,11 +174,11 @@ selectedList = [
 
 ## Run spec/tests
     To run spec;
-    cd node_modules/multi-select-typeahead
+    cd node_modules/multi-select-autocomplete
     npm test
 
 ## to run examples
-    cd node_modules/multi-select-typeahead
+    clone this repo
     npm install
     gulp serve
     should serve on http://localhost:5000
