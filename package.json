@@ -8,9 +8,10 @@
         "build": "gulp build"
     },
     "files": [
-        "dist/multiple-select.scss",
-        "dist/multiple-select.css",
-        "test/multi-select-autocomplete_spec.js"
+        "dist/**",
+        "test/multi-select-autocomplete_spec.js",
+        "karma.confi.js",
+        "gulpfile.js"
     ],
     "repository": {
         "type": "git",
