@@ -2,14 +2,15 @@
     "name": "multi-select-autocomplete",
     "version": "v1.0.0",
     "description": "A complete Angularjs directive for multiple selection with suggestion list && autocomplete.",
-    "main": [
-        "dist/multiple-select.min.js",
-        "dist/multiple-select.min.css"
-    ],
+    "main": "dist/multiple-select.js",
     "scripts": {
         "test": "npm install && npm run build && node_modules/karma/bin/karma start karma.conf.js",
         "build": "gulp build"
     },
+    "files": [
+        "dist/multiple-select.scss",
+        "dist/multiple-select.css"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CINBCUniversal/Multi-Select-Typeahead.git"
