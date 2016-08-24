@@ -1,0 +1,47 @@
+<div class="ng-ms form-item-container">
+    <ul class="list-inline">
+        <li ng-repeat="item in vm.modelArr">
+            <span ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">
+                {{item}}
+                <span class="remove" ng-click="vm.removeAddedValues(item)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </span>&nbsp;
+            </span>
+            <span ng-if="vm.objectProperty != undefined && vm.objectProperty != ''">
+                {{item[vm.objectProperty]}}
+                <span class="remove" ng-click="vm.removeAddedValues(item)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </span>&nbsp;
+            </span>
+        </li>
+        <li ng-if="vm.showInput">
+            <input
+                name="{{name}}"
+                ng-model="vm.inputValue"
+                placeholder="{{vm.placeholder}}"
+                class="select_input"
+                ng-keydown="vm.keyParser($event)"
+                err-msg-required="{{errMsgRequired}}"
+                ng-disabled="vm.disable"
+                ng-focus="vm.onFocus()"
+                ng-blur="vm.onBlur()"
+                ng-required="!vm.modelArr.length && isRequired"
+                ng-change="vm.onChange()">
+        </li>
+        <i class="glyphicon glyphicon-remove pull-right" ng-if="vm.clearAll" ng-click="vm.removeAll()"></i>
+
+    </ul>
+
+    <div ng-if="vm.showOptionList && vm.suggestionsArr" class="autocomplete-list" ng-show="vm.isFocused || vm.isHover" ng-mouseenter="vm.onMouseEnter()" ng-mouseleave="vm.onMouseLeave()">
+        <ul>
+            <li ng-class="{'autocomplete-active' : vm.selectedItemIndex == $index}"
+            ng-repeat="suggestion in vm.suggestionsArr | filter : vm.inputValue | filter : vm.alreadyAddedValues"
+            ng-click="vm.onSuggestedItemsClick(suggestion)"
+            ng-mouseenter="vm.mouseEnterOnItem($index)">
+                <span ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">{{suggestion}}</span>
+                <span ng-if="vm.objectProperty != undefined && vm.objectProperty != ''">{{suggestion[vm.objectProperty]}}</span>
+            </li>
+        </ul>
+    </div>
+
+</div>

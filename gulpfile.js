@@ -20,7 +20,7 @@ gulp.task('styles', function () {
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch('./web/**/*.scss', ['styles']);
-  gulp.watch("./web/**/*.js", browserSync.reload);
+  gulp.watch("./dist/**/*.js", browserSync.reload);
   gulp.watch("./web/**/*.css", browserSync.reload);
   gulp.watch("./web/**/*.html", browserSync.reload);
 
@@ -67,11 +67,11 @@ gulp.task('copy-html', function () {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
+gulp.task('build', ['copy-scss', 'copy-html', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
   return gulp.src([
     './src/templates.js',
       './web/app/app.js',
-      './src/multi-select-autocomplete.js'
+      './dist/multi-select-autocomplete.js'
     ])
     .pipe(concat('multiple-select.js'))
     .pipe(gulp.dest('./dist/'));
