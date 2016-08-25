@@ -34,7 +34,7 @@ gulp.task('cacheTemplate', function () {
       module: 'templates',
       standalone: true
     }))
-    .pipe(gulp.dest('./src/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('cssminify', function () {
@@ -69,11 +69,10 @@ gulp.task('copy-html', function () {
 
 gulp.task('build', ['copy-scss', 'copy-html', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
   return gulp.src([
-    './src/templates.js',
-      './web/app/app.js',
+    './dist/templates.js',
       './dist/multi-select-autocomplete.js'
     ])
-    .pipe(concat('multiple-select.js'))
+    .pipe(concat('multi-select-autocomplete.js'))
     .pipe(gulp.dest('./dist/'));
 });
 

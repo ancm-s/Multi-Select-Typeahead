@@ -1,4 +1,4 @@
-namespace multiSelectAutocomplete {
+module multiSelectAutocomplete {
 
 
     export class MultiAutocompleteCtrl {
@@ -192,6 +192,7 @@ namespace multiSelectAutocomplete {
         }
     }
 
-    angular.module('multiSelectAutocomplete')
-        .directive('multiAutocomplete', [() => { return new multiSelectAutocomplete.MultiAutocompleteDirective() }]);
+    angular.module('multiSelectAutocomplete', ["templates"])
+        .directive('multiAutocomplete', [() => { return new multiSelectAutocomplete.MultiAutocompleteDirective() }])
+        .controller('MultiAutocompleteCtrl',  multiSelectAutocomplete.MultiAutocompleteCtrl);
 };

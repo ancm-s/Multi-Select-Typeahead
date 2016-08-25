@@ -5,11 +5,7 @@ describe('multi-Autocomplete', function () {
   var plans = ["Awesome Plan", "Not so Awesome Plan", "sucky Plan"];
   beforeEach(inject(function ($rootScope, $compile, _$httpBackend_, $controller) {
     scope = $rootScope.$new();
-    $httpBackend = _$httpBackend_;;
-    $controller = $controller;
-    $controller('MultiAutocompleteCtrl as vm', {
-      $scope: scope
-    });
+    $httpBackend = _$httpBackend_;
     compile = $compile;
   }));
 
@@ -55,7 +51,7 @@ describe('multi-Autocomplete', function () {
   describe('when objectProperty is provided and plan is array of objects', function () {
     beforeEach(function () {
       scope.selectedPlans = [];
-      scope.orderBy = 'name';      
+      scope.orderBy = 'name';
       scope.plans = [{
         name: "Awesome Plan",
         id: 1

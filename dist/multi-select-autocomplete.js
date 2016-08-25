@@ -176,8 +176,9 @@ var multiSelectAutocomplete;
         return MultiAutocompleteDirective;
     }());
     multiSelectAutocomplete.MultiAutocompleteDirective = MultiAutocompleteDirective;
-    angular.module('multiSelectAutocomplete')
-        .directive('multiAutocomplete', [function () { return new multiSelectAutocomplete.MultiAutocompleteDirective(); }]);
+    angular.module('multiSelectAutocomplete', ["templates"])
+        .directive('multiAutocomplete', [function () { return new multiSelectAutocomplete.MultiAutocompleteDirective(); }])
+        .controller('MultiAutocompleteCtrl', multiSelectAutocomplete.MultiAutocompleteCtrl);
 })(multiSelectAutocomplete || (multiSelectAutocomplete = {}));
 ;
 //# sourceMappingURL=multi-select-autocomplete.js.map
