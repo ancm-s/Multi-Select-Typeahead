@@ -1,5 +1,16 @@
 module multiSelectAutocomplete {
-
+    interface IScopeOptions {
+      placeholder: string,
+      modelArr: string,
+      apiUrl: string,
+      suggestionsArr: string,
+      objectProperty: string,
+      disable: string,
+      multiple: string,
+      clearAll:string,
+      closeOnSelect:string,
+      sortBy:string
+    }
 
 
     export class MultiAutocompleteDirective {
@@ -16,7 +27,7 @@ module multiSelectAutocomplete {
         controller = multiSelectAutocomplete.MultiAutocompleteCtrl;
         controllerAs: string = 'vm';
         bindToController: boolean = true;
-        scope: any = {
+        scope: IScopeOptions = {
             placeholder: '=?',
             modelArr: '=ngModel',
             apiUrl: '@?',
