@@ -60,6 +60,11 @@ gulp.task('copy-scss', function () {
     .pipe(rename('multiple-select.scss'))
     .pipe(gulp.dest('./dist/'));
 });
+gulp.task('copy-template', function () {
+  gulp.src('./src/templates.js')
+    .pipe(rename('templates.js'))
+    .pipe(gulp.dest('./dist/'));
+});
 
 gulp.task('copy-html', function () {
   gulp.src('./src/multi-select-autocomplete.html')
@@ -67,9 +72,9 @@ gulp.task('copy-html', function () {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('build', ['copy-scss', 'copy-html', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
+gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
   return gulp.src([
-    './dist/templates.js',
+    './src/templates.js',
       './dist/multi-select-autocomplete.js'
     ])
     .pipe(concat('multi-select-autocomplete.js'))
