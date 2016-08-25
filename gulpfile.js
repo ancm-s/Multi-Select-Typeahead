@@ -20,9 +20,9 @@ gulp.task('styles', function () {
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch('./web/**/*.scss', ['styles']);
-  gulp.watch("./dist/**/*.js", browserSync.reload);
-  gulp.watch("./web/**/*.css", browserSync.reload);
-  gulp.watch("./web/**/*.html", browserSync.reload);
+  gulp.watch("./dist/**/*.js", ['build']);
+  gulp.watch("./web/**/*.css", ['build']);
+  gulp.watch("./web/**/*.html", ['build']);
 
 });
 
@@ -60,26 +60,24 @@ gulp.task('copy-scss', function () {
     .pipe(rename('multiple-select.scss'))
     .pipe(gulp.dest('./dist/'));
 });
-gulp.task('copy-template', function () {
-  gulp.src('./src/templates.js')
-    .pipe(rename('templates.js'))
-    .pipe(gulp.dest('./dist/'));
-});
 
 gulp.task('copy-html', function () {
   gulp.src('./src/multi-select-autocomplete.html')
     .pipe(rename('multi-select-autocomplete.html'))
     .pipe(gulp.dest('./dist/'));
 });
-
-gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'jsminify'], function () {
-  return gulp.src([
-    './src/templates.js',
+gulp.task('concat', function () {
+  gulp.src([
+      './dist/templates.js',
+      './dist/multi-select-autocomplete-directive.js',
+      './dist/multi-select-autocomplete-controller.js',
       './dist/multi-select-autocomplete.js'
     ])
-    .pipe(concat('multi-select-autocomplete.js'))
+    .pipe(concat('multiple-select.js'))
     .pipe(gulp.dest('./dist/'));
 });
+
+gulp.task('build', ['copy-scss', 'cacheTemplate', 'cssminify', 'concat', 'jsminify']);
 
 // Static server
 gulp.task('serve', ['watch'], function () {

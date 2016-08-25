@@ -1,6 +1,6 @@
 {
   "name": "multi-select-autocomplete",
-  "version": "v1.0.0",
+  "version": "2.0.0",
   "description": "A complete Angularjs directive for multiple selection with suggestion list && autocomplete.",
   "main": "dist/multiple-select.js",
   "scripts": {

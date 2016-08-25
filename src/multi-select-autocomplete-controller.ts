@@ -1,16 +1,15 @@
 module multiSelectAutocomplete {
-
-
     export class MultiAutocompleteCtrl {
-
+        /* Dependency inject*/
         static $inject = ['$scope', '$log', '$filter', '$http'];
+
         public modelArr: any;
-        apiUrl: any;
-        sortBy: any;
-        multiple: any;
+        apiUrl: string;
+        sortBy: string;
+        multiple: number;
         suggestionsArr: any;
         inputValue: string;
-        selectedItemIndex = 0;
+        selectedItemIndex: number = 0;
         isHover: Boolean = false;
         isFocused: Boolean = false;
         showInput: Boolean = true;
@@ -29,7 +28,7 @@ module multiSelectAutocomplete {
             public $log: angular.ILogService,
             public $filter: angular.IFilterService,
             public $http: angular.IHttpService,
-            ) {
+        ) {
             if (this.modelArr === null || this.modelArr === "" || this.modelArr === undefined) {
                 this.modelArr = [];
             }
@@ -48,7 +47,7 @@ module multiSelectAutocomplete {
             }
         }
 
-        removeAddedValues = (selectedValue) => {
+        removeAddedValues = (selectedValue): void => {
             if (this.modelArr && this.modelArr !== "") {
                 var selectedValueIndex = this.modelArr.indexOf(selectedValue);
                 if (selectedValueIndex !== -1)
@@ -57,13 +56,13 @@ module multiSelectAutocomplete {
             this.shouldShowInput();
         };
 
-        removeAll = () => {
+        removeAll = (): void => {
             this.modelArr = [];
             this.shouldShowInput();
         }
 
-        onSuggestedItemsClick = (selectedValue) => {
-            if (this.multiple != null && this.multiple != "") {
+        onSuggestedItemsClick = (selectedValue): void => {
+            if (this.multiple != null) {
                 if (this.modelArr.length < this.multiple) {
                     this.modelArr.push(selectedValue);
                     this.inputValue = "";
@@ -75,7 +74,7 @@ module multiSelectAutocomplete {
             this.shouldShowInput();
         };
 
-        keyParser = ($event) => {
+        keyParser = ($event):void => {
             var key = this.keys[$event.keyCode];
             if (key === 'backspace' && this.inputValue === "") {
                 if (this.modelArr.length != 0)
@@ -104,33 +103,33 @@ module multiSelectAutocomplete {
             return isAdded;
         };
 
-        mouseEnterOnItem = (index) =>{
+        mouseEnterOnItem = (index) => {
             this.selectedItemIndex = index;
         };
 
         /***** Event Methods *****/
-        onMouseEnter = () =>{
+        onMouseEnter = (): void => {
             this.isHover = true
         };
 
-        onMouseLeave = () =>{
+        onMouseLeave = (): void => {
             this.isHover = false;
         };
 
-        onFocus = () =>{
+        onFocus = (): void => {
             this.isFocused = true
         };
 
-        onBlur = () =>{
+        onBlur = (): void => {
             this.isFocused = false;
         };
 
-        onChange = () =>{
+        onChange = (): void => {
             this.selectedItemIndex = 0;
         };
 
-        shouldShowInput: any = () =>{
-            if (this.multiple && this.multiple !== "") {
+        shouldShowInput = (): void => {
+            if (this.multiple) {
                 this.showInput = this.modelArr.length >= this.multiple ? false : true;
                 this.showOptionList = this.modelArr.length >= this.multiple ? false : true;
             } else {
@@ -150,49 +149,20 @@ module multiSelectAutocomplete {
             }
             return duplicate;
         };
-        getSuggestionsList = () => {
+        getSuggestionsList = (): void => {
             var url = this.apiUrl;
             this.$http({
                 method: 'GET',
                 url: url
-            }).then((response) => {
+            }).then((response): void => {
                 this.$log.log(response);
                 this.suggestionsArr = response.data;
-            }, (response) => {
+            }).catch((response): void => {
                 this.$log.log("MultiSelect typeahead ----- Unable to fetch list");
             });
         };
     }
 
-    export class MultiAutocompleteDirective {
-
-        public link: Function = (scope: angular.IScope, element: JQuery, attr: angular.IAttributes) => {
-            scope['isRequired'] = attr['required'];
-            scope['errMsgRequired'] = attr['errMsgRequired'];
-            scope['name'] = attr['name'];
-        };
-
-        restrict: string = 'E';
-        templateUrl: string = `multi-select-autocomplete.html`;
-
-        controller = multiSelectAutocomplete.MultiAutocompleteCtrl;
-        controllerAs: string = 'vm';
-        bindToController: boolean = true;
-        scope: any = {
-            placeholder: '=?',
-            modelArr: '=ngModel',
-            apiUrl: '@?',
-            suggestionsArr: '=?',
-            objectProperty: '=?',
-            disable: '=?',
-            multiple: '=?',
-            clearAll: '=?',
-            closeOnSelect: '=?',
-            sortBy: '=?'
-        }
-    }
-
-    angular.module('multiSelectAutocomplete', ["templates"])
-        .directive('multiAutocomplete', [() => { return new multiSelectAutocomplete.MultiAutocompleteDirective() }])
-        .controller('MultiAutocompleteCtrl',  multiSelectAutocomplete.MultiAutocompleteCtrl);
-};
+    angular.module('multiSelectAutocomplete')
+        .controller('MultiAutocompleteCtrl', multiSelectAutocomplete.MultiAutocompleteCtrl);
+}

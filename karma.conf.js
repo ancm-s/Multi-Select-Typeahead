@@ -18,7 +18,7 @@ module.exports = function (config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/karma-jasmine-jquery/lib/index.js',
-      'dist/multi-select-autocomplete.js',
+      'dist/multiple-select.js',
       'test/multi-select-autocomplete_spec.js'
     ],
 
