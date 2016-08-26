@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "target": "ES5",
+    "outDir": "../dist/test/",
+    "sourceMap": true,
+    "listFiles": false
+  },
+  "filesGlobs": [
+    "./**/**.ts"
+  ]
+}
