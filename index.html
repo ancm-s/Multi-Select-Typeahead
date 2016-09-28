@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Multi-select-typeahead by CINBCUniversal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Multi-select-typeahead</h1>
+      <h2 class="project-tagline">A complete Angularjs directive for multiple selection with suggestion list &amp;&amp; autocomplete.</h2>
+      <a href="https://github.com/CINBCUniversal/Multi-Select-Typeahead" class="btn">View on GitHub</a>
+      <a href="https://github.com/CINBCUniversal/Multi-Select-Typeahead/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/CINBCUniversal/Multi-Select-Typeahead/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="multi-select-typeahead" class="anchor" href="#multi-select-typeahead" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multi-Select Typeahead</h1>
+
+<p>A complete Angular.js directive for Multi-select autocomplete</p>
+
+<p><img src="https://github.com/CINBCUniversal/Multi-Select-Typeahead/blob/master/screen_shots/nonSelectedPlan.png" alt="alt text">
+<img src="https://github.com/CINBCUniversal/Multi-Select-Typeahead/blob/master/screen_shots/selectedPlan.png" alt="alt text"></p>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h1>
+
+<p>Grab the sources with  npm or download from Github: [<a href="https://github.com/CINBCUniversal/Multi-Select-Typeahead">https://github.com/CINBCUniversal/Multi-Select-Typeahead</a>]:</p>
+
+<p>Install "multi-select-autocomplete" npm and save it in your package.json or bower.json.
+For Example :</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install --save git+https://github.com/CINBCUniversal/Multi-Select-Typeahead.git</pre></div>
+
+<p>After installation include its </p>
+
+<div class="highlight highlight-text-html-basic"><pre>@import node_modules/multi-select-autocomplete/dist/multiple-select.scss
+multiple-select.min.css AND
+multiple-select.min.js
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>node_modules/multi-select-autocomplete/dist/multiple-select.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">link</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>node_modules/multi-select-autocomplete/dist/multiple-select.min.css<span class="pl-pds">"</span></span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span>&gt;</pre></div>
+
+<p>in your html. Then,</p>
+
+<p>Include <code>multiSelectAutocomplete</code> module in your app:
+For example :</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>, [
+    <span class="pl-s"><span class="pl-pds">'</span>multiSelectAutocomplete<span class="pl-pds">'</span></span>
+]);</pre></div>
+
+<p>Now angularMultipleSelect module is injected in your module. You are ready to use it.</p>
+
+<p>You can use it in 2 ways in your form :
+1. If your options list is an array of objects, like :</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">vm</span>.<span class="pl-smi">planList</span> <span class="pl-k">=</span> [
+            {id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>plan A<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">3</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan C<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">4</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan D<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">5</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>My awesome Plan<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">6</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Not So Awesome Plan<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">7</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan it<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">8</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>New Plan<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">9</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>New Plan A<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">10</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bootstrap Plan<span class="pl-pds">"</span></span>}
+        ];</pre></div>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.selectedList<span class="pl-pds">"</span></span>
+     <span class="pl-e">object-property</span>=<span class="pl-s"><span class="pl-pds">"</span>'name'<span class="pl-pds">"</span></span>
+     <span class="pl-e">suggestions-arr</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.planList<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span>&gt;</pre></div>
+
+<p>Here, in "suggestions-arr" you have to provide the options list from which user can select multiple value.
+and, "object-property" is which you want to show to user. In above example "name" is the property which i want to show.</p>
+
+<p>"ng-model" will give you an array of selected things.
+For Ex : If user selects plan A &amp; plan B, then</p>
+
+<div class="highlight highlight-source-js"><pre>ng<span class="pl-k">-</span>model will have
+<span class="pl-smi">vm</span>.<span class="pl-smi">selectedList</span> <span class="pl-k">=</span> [
+            {id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>plan A<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>}
+        ];</pre></div>
+
+<ol>
+<li>If your options list is an array of strings, like :</li>
+</ol>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">vm</span>.<span class="pl-smi">planList</span> <span class="pl-k">=</span> [
+            <span class="pl-s"><span class="pl-pds">"</span>plan A<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan C<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan D<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>My awesome Plan<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Not So Awesome Plan<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan it<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>New Plan<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>New Plan A<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Bootstrap Plan<span class="pl-pds">"</span></span>
+        ];</pre></div>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.selectedList<span class="pl-pds">"</span></span>
+     <span class="pl-e">suggestions-arr</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.planList<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span>&gt;</pre></div>
+
+<p>Here, in "suggestions-arr" you have to provide the options list from which user can select multiple value.</p>
+
+<p>"ng-model" will give you an array of selected things.
+For Ex : If user selects Plan A &amp; Plan B, then</p>
+
+<div class="highlight highlight-source-js"><pre>ng<span class="pl-k">-</span>model will have
+selectedList <span class="pl-k">=</span> [
+      <span class="pl-s"><span class="pl-pds">"</span>Plan A<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>
+  ]</pre></div>
+
+<ol>
+<li>To make it required Field in a form for errors</li>
+</ol>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">form</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>multipleSelectForm<span class="pl-pds">"</span></span> <span class="pl-e">novalidate</span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">ng-class</span>=<span class="pl-s"><span class="pl-pds">"</span>{'has-error' : multipleSelectForm.multipleSelect.$invalid <span class="pl-ii">&amp;&amp;</span> multipleSelectForm.multipleSelect.$dirty, 'has-success' : !multipleSelectForm.multipleSelect.$invalid <span class="pl-ii">&amp;&amp;</span> multipleSelectForm.multipleSelect.$dirty}<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">label</span>&gt;should not be able to submit if the selected is not selected&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.selected<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>multipleSelect<span class="pl-pds">"</span></span> <span class="pl-e">required</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span>
+                               <span class="pl-e">suggestions-arr</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.planList<span class="pl-pds">"</span></span>&gt;
+        &lt;/<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">ng-show</span>=<span class="pl-s"><span class="pl-pds">"</span>multipleSelectForm.multipleSelect.$invalid <span class="pl-ii">&amp;&amp;</span> multipleSelectForm.multipleSelect.$dirty<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>ng-hide<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">p</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>error-msg<span class="pl-pds">"</span></span> <span class="pl-e">ng-show</span>=<span class="pl-s"><span class="pl-pds">"</span>multipleSelectForm.multipleSelect.$error.required<span class="pl-pds">"</span></span>&gt;Please select something from multiple select field&lt;/<span class="pl-ent">p</span>&gt;
+        &lt;/<span class="pl-ent">span</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">br</span>/&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span> <span class="pl-e">ng-click</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.onSubmit()<span class="pl-pds">"</span></span>&gt;Submit Form&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
+
+<ol>
+<li>Fetching options list from 3rd party api/url
+Part 1. If your Api return an array of strings like :</li>
+</ol>
+
+<div class="highlight highlight-source-js"><pre>        [
+            <span class="pl-s"><span class="pl-pds">"</span>plan A<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan C<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>Plan D<span class="pl-pds">"</span></span>
+        ];</pre></div>
+
+<pre><code>Then in html there is no need to specify property in "object-property" attribute in directive
+</code></pre>
+
+<div class="highlight highlight-text-html-basic"><pre>    &lt;<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>skillsFromApi<span class="pl-pds">"</span></span>
+                           <span class="pl-e">api-url</span>=<span class="pl-s"><span class="pl-pds">"</span>{{apiPath}}<span class="pl-pds">"</span></span>&gt;
+    &lt;/<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span>&gt;</pre></div>
+
+<pre><code>Part 2. If your Api return an array of objects like :
+</code></pre>
+
+<div class="highlight highlight-source-js"><pre>        [
+            {id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>plan A<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan B<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">3</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan C<span class="pl-pds">"</span></span>},
+            {id<span class="pl-k">:</span> <span class="pl-c1">4</span>, name <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Plan D<span class="pl-pds">"</span></span>}
+        ]</pre></div>
+
+<pre><code>Then in html you need to specify property in "object-property" attribute in directive
+in this case, you have to do like this :
+</code></pre>
+
+<div class="highlight highlight-text-html-basic"><pre>    &lt;<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>skillsFromApi<span class="pl-pds">"</span></span>
+                            <span class="pl-e">object-property</span>=<span class="pl-s"><span class="pl-pds">"</span>'name'<span class="pl-pds">"</span></span>
+                           <span class="pl-e">api-url</span>=<span class="pl-s"><span class="pl-pds">"</span>{{apiPath}}<span class="pl-pds">"</span></span>&gt;
+    &lt;/<span class="pl-ent">multi</span><span class="pl-e">-autocomplete</span>&gt;</pre></div>
+
+<h2>
+<a id="multi-autocomplete-options" class="anchor" href="#multi-autocomplete-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>multi-autocomplete Options</h2>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Required</th>
+<th>Detail</th>
+<th>Defaults</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model-arr</td>
+<td>String</td>
+<td>required</td>
+<td>ng-model for the input/autocomplete</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>suggestion-arr</td>
+<td>Array</td>
+<td>required</td>
+<td>Array of options for multi-select</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>Boolean</td>
+<td>optional</td>
+<td>Boolean to programaticly enable/disable mult-select</td>
+<td>false</td>
+</tr>
+<tr>
+<td>placeholder</td>
+<td>String</td>
+<td>optional</td>
+<td>placeholder for the input</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>api-url</td>
+<td>string</td>
+<td>optional</td>
+<td>url endpoint to get suggestions-arr</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>object-property</td>
+<td>string</td>
+<td>required*</td>
+<td>property name to foucs on if suggestionArr is array of objects.</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>multiple</td>
+<td>number</td>
+<td>optional</td>
+<td>the number of options the user can select</td>
+<td>suggestionArr.length</td>
+</tr>
+<tr>
+<td>clear-all</td>
+<td>Boolean</td>
+<td>optional</td>
+<td>clear all selected options</td>
+<td>false</td>
+</tr>
+<tr>
+<td>close-on-select</td>
+<td>Boolean</td>
+<td>optional</td>
+<td>close dropdown when the user selects the options</td>
+<td>true</td>
+</tr>
+<tr>
+<td>sort-by</td>
+<td>String/Boolean</td>
+<td>optional</td>
+<td>property to sort by if the suggestionArr is array of objects, Boolean if the suggestionArr is array of strings</td>
+<td>NA</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="run-spectests" class="anchor" href="#run-spectests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run spec/tests</h2>
+
+<pre><code>To run spec;
+cd node_modules/multi-select-autocomplete
+npm test
+</code></pre>
+
+<h2>
+<a id="to-run-examples" class="anchor" href="#to-run-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>to run examples</h2>
+
+<pre><code>clone this repo
+npm install
+gulp serve
+should serve on http://localhost:5000
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/CINBCUniversal/Multi-Select-Typeahead">Multi-select-typeahead</a> is maintained by <a href="https://github.com/CINBCUniversal">CINBCUniversal</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
