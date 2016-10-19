@@ -6,7 +6,7 @@ A complete Angular.js directive for Multi-select autocomplete
 ![alt text](https://github.com/CINBCUniversal/Multi-Select-Typeahead/blob/master/screen_shots/selectedPlan.png)
 
 #Getting started
-Grab the sources with  npm or download from Github: [https://github.com/CINBCUniversal/Multi-Select-Typeahead]:
+Grab the sources with  npm or download from (Github:)[https://github.com/CINBCUniversal/Multi-Select-Typeahead]:
 
 
 Install "multi-select-autocomplete" npm and save it in your package.json or bower.json.
@@ -16,7 +16,7 @@ For Example :
 $ npm install --save git+https://github.com/CINBCUniversal/Multi-Select-Typeahead.git
 ```
 
-After installation include its 
+After installation include its
 ```html
 @import node_modules/multi-select-autocomplete/dist/multiple-select.scss
 multiple-select.min.css AND
@@ -182,4 +182,3 @@ selectedList = [
     npm install
     gulp serve
     should serve on http://localhost:5000
-
