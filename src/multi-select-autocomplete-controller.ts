@@ -47,7 +47,7 @@ module multiSelectAutocomplete {
             }
         }
 
-        removeAddedValues = (selectedValue): void => {
+        removeAddedValues(selectedValue): void {
             if (this.modelArr && this.modelArr !== "") {
                 var selectedValueIndex = this.modelArr.indexOf(selectedValue);
                 if (selectedValueIndex !== -1)
@@ -56,12 +56,12 @@ module multiSelectAutocomplete {
             this.shouldShowInput();
         };
 
-        removeAll = (): void => {
+        removeAll(): void {
             this.modelArr = [];
             this.shouldShowInput();
         }
 
-        onSuggestedItemsClick = (selectedValue): void => {
+        onSuggestedItemsClick(selectedValue): void {
             if (this.multiple != null) {
                 if (this.modelArr.length < this.multiple) {
                     this.modelArr.push(selectedValue);
@@ -74,7 +74,7 @@ module multiSelectAutocomplete {
             this.shouldShowInput();
         };
 
-        keyParser = ($event):void => {
+        keyParser($event):void {
             var key = this.keys[$event.keyCode];
             if (key === 'backspace' && this.inputValue === "") {
                 if (this.modelArr.length != 0)
@@ -97,13 +97,13 @@ module multiSelectAutocomplete {
             }
         };
 
-        alreadyAddedValues = (item) => {
+        alreadyAddedValues(item) {
             var isAdded = true;
             isAdded = !this.isDuplicate(this.modelArr, item);
             return isAdded;
         };
 
-        mouseEnterOnItem = (index) => {
+        mouseEnterOnItem(index) {
             this.selectedItemIndex = index;
         };
 
