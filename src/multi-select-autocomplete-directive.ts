@@ -9,7 +9,8 @@ module multiSelectAutocomplete {
       multiple: string,
       clearAll:string,
       closeOnSelect:string,
-      sortBy:string
+      sortBy:string,
+      alertSelected:string
     }
 
 
@@ -37,7 +38,8 @@ module multiSelectAutocomplete {
             multiple: '=?',
             clearAll: '=?',
             closeOnSelect: '=?',
-            sortBy: '=?'
+            sortBy: '=?',
+            alertSelected: '&?'
         }
     }
 

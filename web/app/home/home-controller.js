@@ -30,6 +30,9 @@
             "New Plan A",
             "Bootstrap Plan"
         ];
+        $scope.selected = function (single, all) {
+          console.log(`Item Selected: ${single}, All Selected: ${all}`);
+        }
 
         $scope.onSubmit = function () {
             console.log("submit");

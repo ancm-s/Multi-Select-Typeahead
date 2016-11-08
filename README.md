@@ -163,6 +163,7 @@ selectedList = [
 |---	|---	|---	|---	|---	|
 |model-arr|  String | required | ng-model for the input/autocomplete  |   NA|
 |suggestion-arr| Array |required |Array of options for multi-select | NA|
+|alert-selected| Function |optional |function that will be called when user selects an item, two params will be passed into the function "single", "all" | function(single, all)|
 |disable |Boolean | optional  	| Boolean to programaticly enable/disable mult-select| false  	|
 |placeholder |String |optional	|placeholder for the input | NA  	|
 |api-url | string | optional |url endpoint to get suggestions-arr | NA |

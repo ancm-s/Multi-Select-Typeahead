@@ -14,6 +14,7 @@ module multiSelectAutocomplete {
         isFocused: Boolean = false;
         showInput: Boolean = true;
         showOptionList: Boolean = true;
+        alertSelected:any;
         private keys = {
             38: 'up',
             40: 'down',
@@ -71,6 +72,9 @@ module multiSelectAutocomplete {
                 this.modelArr.push(selectedValue);
                 this.inputValue = "";
             }
+            if(this.alertSelected){
+              this.alertSelected({single: selectedValue, all: this.modelArr});
+            }
             this.shouldShowInput();
         };
 
@@ -97,7 +101,7 @@ module multiSelectAutocomplete {
             }
         };
 
-        alreadyAddedValues(item) {
+        alreadyAddedValues = (item) => {
             var isAdded = true;
             isAdded = !this.isDuplicate(this.modelArr, item);
             return isAdded;

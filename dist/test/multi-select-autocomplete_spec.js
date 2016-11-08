@@ -13,8 +13,20 @@ describe('multi-Autocomplete', function () {
             scope.plans = ["Awesome Plan", "Sucky Plan", "Not so Awesome Plan"];
             scope.placeholder = 'give it up';
             scope.disabled = false;
-            html = "<multi-autocomplete ng-model=\"selectedPlans\" sort-by=\"true\" placeholder=\"placeholder\" suggestions-arr=\"plans\" clear-all=\"true\" disable=\"disabled\" name=\"multipleSelect\"></multi-autocomplete>";
+            scope.alertSelected = function (single, all) {
+                scope.single = single;
+                scope.all = all;
+            };
+            html = "<multi-autocomplete ng-model=\"selectedPlans\" sort-by=\"true\" alert-selected=\"alertSelected(single, all)\" placeholder=\"placeholder\" suggestions-arr=\"plans\" clear-all=\"true\" disable=\"disabled\" name=\"multipleSelect\"></multi-autocomplete>";
             compileElement(html);
+        });
+        it('should call alert selected function with required parmas when user selects an item', function () {
+            element.find('.autocomplete-list').find('li')[0].click();
+            expect(scope.single).toEqual("Awesome Plan");
+            expect(scope.all).toEqual(["Awesome Plan"]);
+            element.find('.autocomplete-list').find('li')[0].click();
+            expect(scope.single).toEqual("Not so Awesome Plan");
+            expect(scope.all).toEqual(["Awesome Plan", "Not so Awesome Plan"]);
         });
         it('should contain clear all selected icon when clear-all option is true', function () {
             expect(element.find('i.glyphicon-remove.pull-right')).toExist();

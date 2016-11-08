@@ -23,7 +23,8 @@ var multiSelectAutocomplete;
                 multiple: '=?',
                 clearAll: '=?',
                 closeOnSelect: '=?',
-                sortBy: '=?'
+                sortBy: '=?',
+                alertSelected: '&?'
             };
         }
         return MultiAutocompleteDirective;
@@ -56,64 +57,10 @@ var multiSelectAutocomplete;
                 9: 'tab',
                 27: 'esc'
             };
-            this.removeAddedValues = function (selectedValue) {
-                if (_this.modelArr && _this.modelArr !== "") {
-                    var selectedValueIndex = _this.modelArr.indexOf(selectedValue);
-                    if (selectedValueIndex !== -1)
-                        _this.modelArr.splice(selectedValueIndex, 1);
-                }
-                _this.shouldShowInput();
-            };
-            this.removeAll = function () {
-                _this.modelArr = [];
-                _this.shouldShowInput();
-            };
-            this.onSuggestedItemsClick = function (selectedValue) {
-                if (_this.multiple != null) {
-                    if (_this.modelArr.length < _this.multiple) {
-                        _this.modelArr.push(selectedValue);
-                        _this.inputValue = "";
-                    }
-                }
-                else {
-                    _this.modelArr.push(selectedValue);
-                    _this.inputValue = "";
-                }
-                _this.shouldShowInput();
-            };
-            this.keyParser = function ($event) {
-                var key = _this.keys[$event.keyCode];
-                if (key === 'backspace' && _this.inputValue === "") {
-                    if (_this.modelArr.length != 0)
-                        _this.modelArr.pop();
-                }
-                else if (key === 'down') {
-                    var filteredSuggestionArr = _this.$filter('filter')(_this.suggestionsArr, _this.inputValue);
-                    filteredSuggestionArr = _this.$filter('filter')(filteredSuggestionArr, _this.alreadyAddedValues);
-                    if (_this.selectedItemIndex < filteredSuggestionArr.length - 1)
-                        _this.selectedItemIndex++;
-                }
-                else if (key === 'up' && _this.selectedItemIndex > 0) {
-                    _this.selectedItemIndex--;
-                }
-                else if (key === 'esc') {
-                    _this.isHover = false;
-                    _this.isFocused = false;
-                }
-                else if (key === 'enter') {
-                    var filteredSuggestionArr = _this.$filter('filter')(_this.suggestionsArr, _this.inputValue);
-                    filteredSuggestionArr = _this.$filter('filter')(filteredSuggestionArr, _this.alreadyAddedValues);
-                    if (_this.selectedItemIndex < filteredSuggestionArr.length)
-                        _this.onSuggestedItemsClick(filteredSuggestionArr[_this.selectedItemIndex]);
-                }
-            };
             this.alreadyAddedValues = function (item) {
                 var isAdded = true;
                 isAdded = !_this.isDuplicate(_this.modelArr, item);
                 return isAdded;
-            };
-            this.mouseEnterOnItem = function (index) {
-                _this.selectedItemIndex = index;
             };
             /***** Event Methods *****/
             this.onMouseEnter = function () {
@@ -180,10 +127,71 @@ var multiSelectAutocomplete;
                 this.suggestionsArr = this.$filter('orderBy')(this.suggestionsArr, this.sortBy);
             }
         }
-        /* Dependency inject*/
-        MultiAutocompleteCtrl.$inject = ['$scope', '$log', '$filter', '$http'];
+        MultiAutocompleteCtrl.prototype.removeAddedValues = function (selectedValue) {
+            if (this.modelArr && this.modelArr !== "") {
+                var selectedValueIndex = this.modelArr.indexOf(selectedValue);
+                if (selectedValueIndex !== -1)
+                    this.modelArr.splice(selectedValueIndex, 1);
+            }
+            this.shouldShowInput();
+        };
+        ;
+        MultiAutocompleteCtrl.prototype.removeAll = function () {
+            this.modelArr = [];
+            this.shouldShowInput();
+        };
+        MultiAutocompleteCtrl.prototype.onSuggestedItemsClick = function (selectedValue) {
+            if (this.multiple != null) {
+                if (this.modelArr.length < this.multiple) {
+                    this.modelArr.push(selectedValue);
+                    this.inputValue = "";
+                }
+            }
+            else {
+                this.modelArr.push(selectedValue);
+                this.inputValue = "";
+            }
+            if (this.alertSelected) {
+                this.alertSelected({ single: selectedValue, all: this.modelArr });
+            }
+            this.shouldShowInput();
+        };
+        ;
+        MultiAutocompleteCtrl.prototype.keyParser = function ($event) {
+            var key = this.keys[$event.keyCode];
+            if (key === 'backspace' && this.inputValue === "") {
+                if (this.modelArr.length != 0)
+                    this.modelArr.pop();
+            }
+            else if (key === 'down') {
+                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
+                if (this.selectedItemIndex < filteredSuggestionArr.length - 1)
+                    this.selectedItemIndex++;
+            }
+            else if (key === 'up' && this.selectedItemIndex > 0) {
+                this.selectedItemIndex--;
+            }
+            else if (key === 'esc') {
+                this.isHover = false;
+                this.isFocused = false;
+            }
+            else if (key === 'enter') {
+                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
+                if (this.selectedItemIndex < filteredSuggestionArr.length)
+                    this.onSuggestedItemsClick(filteredSuggestionArr[this.selectedItemIndex]);
+            }
+        };
+        ;
+        MultiAutocompleteCtrl.prototype.mouseEnterOnItem = function (index) {
+            this.selectedItemIndex = index;
+        };
+        ;
         return MultiAutocompleteCtrl;
     }());
+    /* Dependency inject*/
+    MultiAutocompleteCtrl.$inject = ['$scope', '$log', '$filter', '$http'];
     multiSelectAutocomplete.MultiAutocompleteCtrl = MultiAutocompleteCtrl;
     angular.module('multiSelectAutocomplete')
         .controller('MultiAutocompleteCtrl', multiSelectAutocomplete.MultiAutocompleteCtrl);
