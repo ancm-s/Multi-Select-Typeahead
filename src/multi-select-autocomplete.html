@@ -1,6 +1,7 @@
 <div class="ng-ms form-item-container">
-    <ul class="list-inline">
-        <li ng-repeat="item in vm.modelArr">
+  <div class="list-line-container">
+    <ul class="list-line">
+        <li ng-repeat="item in vm.modelArr" class="select-inline">
             <span ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">
                 {{item}}
                 <span class="remove" ng-click="vm.removeAddedValues(item)">
@@ -14,7 +15,7 @@
                 </span>&nbsp;
             </span>
         </li>
-        <li ng-if="vm.showInput">
+        <li ng-if="vm.showInput" class="list-input">
             <input
                 name="{{name}}"
                 ng-model="vm.inputValue"
@@ -31,6 +32,8 @@
         <i class="glyphicon glyphicon-remove pull-right" ng-if="vm.clearAll" ng-click="vm.removeAll()"></i>
 
     </ul>
+  </div>
+
 
     <div ng-if="vm.showOptionList && vm.suggestionsArr" class="autocomplete-list" ng-show="vm.isFocused || vm.isHover" ng-mouseenter="vm.onMouseEnter()" ng-mouseleave="vm.onMouseLeave()">
         <ul>

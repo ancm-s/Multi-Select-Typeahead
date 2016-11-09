@@ -5,41 +5,35 @@
 .ion-closed-captioning:before {
     content: "\f12a";
 }
+
 .ion-close-circled:before {
     content: "\f128";
 }
+
 .ion-close-round:before {
     content: "\f129";
 }
+
 .ion-closed-captioning:before {
     content: "\f317";
 }
+
 .mrg-top50 {
     margin-top: 50px;
 }
-.list-inline {
-    padding-left: 0;
-    list-style: none;
-    margin-left: -5px;
-}
-.list-inline > li {
-    display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.list-inline > li {
-    padding-left: 7px;
-    padding-right: 7px;
-}
-.candidate-info-wrap .list-inline li {
+
+.candidate-info-wrap .list-line li {
     vertical-align: middle;
 }
-.candidate-info-wrap .list-inline li.align-super {
+
+.candidate-info-wrap .list-line li.align-super {
     vertical-align: super;
 }
-.candidate-info-wrap .list-inline li.align-middle {
+
+.candidate-info-wrap .list-line li.align-middle {
     vertical-align: middle;
 }
+
 .autocomplete-list {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -51,24 +45,29 @@
     left: -1px;
     z-index: 100;
 }
+
 .autocomplete-list ul {
     margin: 0;
     padding: 0;
     max-height: 300px;
     overflow: auto;
 }
+
 .autocomplete-list ul li {
     cursor: pointer;
     list-style: inside none none;
     padding: 5px 0 5px 10px;
 }
+
 .autocomplete-list ul li.autocomplete-active {
     background-color: #23a9e1;
 }
+
 .autocomplete-active {
     background-color: #0000cc;
     color: #FFFFFF;
 }
+
 .form-item-container {
     background-color: #fff;
     background-image: none;
@@ -78,37 +77,60 @@
     color: #555555;
     position: relative;
 }
-.form-item-container .list-inline {
+
+.form-item-container .list-line {
     margin-bottom: 0;
 }
-.form-item-container .list-inline li {
-    margin: 5px 0;
+
+.form-item-container .list-line li {
+    margin: 9px 7px;
+    list-style: none;
 }
-.form-item-container .list-inline li span {
+
+.form-item-container .list-line li span {
     border: 1px solid #23a9e1;
     border-radius: 4px;
     padding: 4px;
 }
-.form-item-container .list-inline li span.remove {
+
+.form-item-container .list-line li span.remove {
     border: none;
     cursor: pointer;
     padding: 0;
 }
-.form-item-container .list-inline li span.remove i {
+
+.form-item-container .list-line li span.remove i {
     float: none;
     font-size: 12px;
 }
-.form-item-container .list-inline input {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding-left: 5px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+
+.form-item-container {
+    .list-line {
+        input:disabled {
+            background-color: #DDD;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            border: 0;
+        }
+    }
+
+    .pull-right {
+        margin: 8px;
+    }
 }
+
 .error-msg {
     background-color: #ffdaca;
     color: #ed1c24;
     padding: 8px 10px;
 }
+
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label,
@@ -121,25 +143,30 @@
 .has-error.radio-inline label {
     color: #ef4136;
 }
+
 .has-error .form-control {
     background-color: #ffffff;
     border-color: #ef4136;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
+
 .has-error .form-control:focus {
     border-color: #1cba7d;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
 .has-error .input-group-addon {
     color: #ef4136;
     border-color: #ef4136;
     background-color: #f2dede;
 }
+
 .has-error .form-control-feedback {
     color: #ef4136;
 }
+
 .has-success .checkbox,
 .has-success .checkbox-inline,
 .has-success .control-label,
@@ -152,32 +179,47 @@
 .has-success.radio-inline label {
     color: #3c763d;
 }
+
 .has-success .form-control {
     background-color: #cce5cc;
     border-color: #3c763d;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
+
 .has-success .form-control:focus {
     border-color: #1cba7d;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
 .has-success .input-group-addon {
     color: #3c763d;
     border-color: #3c763d;
     background-color: #dff0d8;
 }
+
 .has-success .form-control-feedback {
     color: #3c763d;
 }
-.form-item-container {
-    .list-inline {
-        input:disabled {
-            background-color: #DDD;
-        }
-    }
-    .pull-right {
-      margin: 8px;
-    }
+
+.list-line-container {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.list-line-container > ul {
+    display: table-row;
+    width: 100%;
+}
+
+.list-line-container > ul > li {
+    float: left;
+}
+
+.list-line-container > ul > .list-input:last-child {
+    float: none;
+    overflow-x: hidden;
+    padding: 0 7px;
 }
