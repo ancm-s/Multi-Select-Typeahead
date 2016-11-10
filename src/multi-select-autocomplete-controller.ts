@@ -14,7 +14,9 @@ module multiSelectAutocomplete {
         isFocused: Boolean = false;
         showInput: Boolean = true;
         showOptionList: Boolean = true;
-        alertSelected:any;
+        alertSelected: any;
+        debounce: number = 500;
+        apiSearchKey: string;
         private keys = {
             38: 'up',
             40: 'down',
@@ -36,8 +38,7 @@ module multiSelectAutocomplete {
 
             if (!this.suggestionsArr || this.suggestionsArr === "") {
                 if (this.apiUrl && this.apiUrl !== "") {
-                    console.log(this.apiUrl);
-                    this.getSuggestionsList();
+                    this.getSuggestionsList('');
                 }
                 else {
                     $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
@@ -53,6 +54,9 @@ module multiSelectAutocomplete {
                 var selectedValueIndex = this.modelArr.indexOf(selectedValue);
                 if (selectedValueIndex !== -1)
                     this.modelArr.splice(selectedValueIndex, 1);
+            }
+            if (this.alertSelected) {
+                this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
             this.shouldShowInput();
         };
@@ -72,17 +76,22 @@ module multiSelectAutocomplete {
                 this.modelArr.push(selectedValue);
                 this.inputValue = "";
             }
-            if(this.alertSelected){
-              this.alertSelected({single: selectedValue, all: this.modelArr});
+            if (this.alertSelected) {
+                this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
             this.shouldShowInput();
         };
 
-        keyParser($event):void {
+        keyParser($event): void {
             var key = this.keys[$event.keyCode];
             if (key === 'backspace' && this.inputValue === "") {
-                if (this.modelArr.length != 0)
+                if (this.modelArr.length != 0) {
+                    const removedValue = this.modelArr[this.modelArr.length - 1];
                     this.modelArr.pop();
+                    if (this.alertSelected) {
+                        this.alertSelected({ single: removedValue, all: this.modelArr });
+                    }
+                }
             } else if (key === 'down') {
                 var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
                 filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
@@ -129,6 +138,9 @@ module multiSelectAutocomplete {
         };
 
         onChange = (): void => {
+            if (this.apiUrl && this.apiUrl !== "") {
+                this.getSuggestionsList(this.inputValue);
+            }
             this.selectedItemIndex = 0;
         };
 
@@ -153,8 +165,8 @@ module multiSelectAutocomplete {
             }
             return duplicate;
         };
-        getSuggestionsList = (): void => {
-            var url = this.apiUrl;
+        getSuggestionsList = (input): void => {
+            var url = `${this.apiUrl}?${this.apiSearchKey}=${input}`;
             this.$http({
                 method: 'GET',
                 url: url
@@ -162,6 +174,7 @@ module multiSelectAutocomplete {
                 this.$log.log(response);
                 this.suggestionsArr = response.data;
             }).catch((response): void => {
+                this.suggestionsArr = this.suggestionsArr;
                 this.$log.log("MultiSelect typeahead ----- Unable to fetch list");
             });
         };

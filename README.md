@@ -123,7 +123,32 @@ selectedList = [
 ```
 
 4. Fetching options list from 3rd party api/url
-    Part 1. If your Api return an array of strings like :
+    Part 1. If your Api querys results as user changes values in input and return array is like :
+```javascript
+[
+  {
+    "id": 1,
+    "name": "id labore ex et quam laborum"
+  },
+  {
+    "id": 2,
+    "name": "quo vero reiciendis velit similique earum"
+  }
+]
+```
+    we need couple of attributes on the directive to get this working
+    a) we need to specify an "object-property" attribute in directive.
+    b) we need to specify an "pi-search-key" attribue, this is what will be appended to url as a query param ex, api-url?searchTerm=labore
+    c) default debounce is 500 if you wish to change that you can attach a debounce attribute.
+```html
+    <multi-autocomplete ng-model="skillsFromApi"
+                        object-property="'name'"
+                        api-search-key="'searchTerm'"
+                        debounce="750"
+                        api-url="http://jsonplaceholder.typicode.com/posts/1/comments">
+    </multi-autocomplete>
+```
+    Part 2. If your Api return an array of strings like :
 ```javascript
         [
             "plan A",
@@ -139,7 +164,7 @@ selectedList = [
     </multi-autocomplete>
 ```
 
-    Part 2. If your Api return an array of objects like :
+    Part 3. If your Api return an array of objects like :
 ```javascript
         [
             {id: 1, name : "plan A"},
@@ -167,6 +192,8 @@ selectedList = [
 |disable |Boolean | optional  	| Boolean to programaticly enable/disable mult-select| false  	|
 |placeholder |String |optional	|placeholder for the input | NA  	|
 |api-url | string | optional |url endpoint to get suggestions-arr | NA |
+|api-search-key | string | optional |query param appended to the end of api-url | NA |
+|debounce | number | optional |how long the to wait before triggering input change in (milliseconds)| 500 |
 |object-property |string |required*| property name to foucs on if suggestionArr is array of objects.  | NA |
 |multiple |number |optional| the number of options the user can select | suggestionArr.length |
 |clear-all |Boolean |optional|  clear all selected options| false |

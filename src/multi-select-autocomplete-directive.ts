@@ -10,7 +10,9 @@ module multiSelectAutocomplete {
       clearAll:string,
       closeOnSelect:string,
       sortBy:string,
-      alertSelected:string
+      alertSelected:string,
+      debounce: string
+      apiSearchKey: string
     }
 
 
@@ -39,7 +41,9 @@ module multiSelectAutocomplete {
             clearAll: '=?',
             closeOnSelect: '=?',
             sortBy: '=?',
-            alertSelected: '&?'
+            alertSelected: '&?',
+            debounce: '=?',
+            apiSearchKey: '=?'
         }
     }
 

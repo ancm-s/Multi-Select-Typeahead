@@ -2,17 +2,19 @@
   <div class="list-line-container">
     <ul class="list-line">
         <li ng-repeat="item in vm.modelArr" class="select-inline">
-            <span ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">
+            <span class="selected-item" ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">
+              <span class="remove" ng-click="vm.removeAddedValues(item)">
+                <i class="remove icon"></i>
+              </span>&nbsp;
+
                 {{item}}
-                <span class="remove" ng-click="vm.removeAddedValues(item)">
-                    <i class="glyphicon glyphicon-remove"></i>
-                </span>&nbsp;
             </span>
             <span ng-if="vm.objectProperty != undefined && vm.objectProperty != ''">
+              <span class="remove" ng-click="vm.removeAddedValues(item)">
+                <i class="remove icon"></i>
+              </span>&nbsp;
+
                 {{item[vm.objectProperty]}}
-                <span class="remove" ng-click="vm.removeAddedValues(item)">
-                    <i class="glyphicon glyphicon-remove"></i>
-                </span>&nbsp;
             </span>
         </li>
         <li ng-if="vm.showInput" class="list-input">
@@ -27,9 +29,12 @@
                 ng-focus="vm.onFocus()"
                 ng-blur="vm.onBlur()"
                 ng-required="!vm.modelArr.length && isRequired"
+                ng-model-options="{ debounce: vm.debounce }"
                 ng-change="vm.onChange()">
+                <div class="remove-all-icon" ng-if="vm.clearAll">
+                  <i class="remove icon pull-right"  ng-click="vm.removeAll()"></i>
+                </div>
         </li>
-        <i class="glyphicon glyphicon-remove pull-right" ng-if="vm.clearAll" ng-click="vm.removeAll()"></i>
 
     </ul>
   </div>

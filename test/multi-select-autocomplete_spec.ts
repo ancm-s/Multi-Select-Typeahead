@@ -46,7 +46,7 @@ describe('multi-Autocomplete', () => {
         });
 
         it('should contain clear all selected icon when clear-all option is true', (): void => {
-            expect(element.find('i.glyphicon-remove.pull-right')).toExist();
+            expect(element.find('i.remove.icon.pull-right')).toExist();
         });
         it('input should have placeholder if provided in options', (): void => {
             expect(element.find('input')).toHaveAttr('placeholder', scope.placeholder);
@@ -177,7 +177,7 @@ describe('multi-Autocomplete', () => {
             element.find('.autocomplete-list').find('li')[0].click();
             element.find('.autocomplete-list').find('li')[0].click();
             expect(getDropdownOptionsLength()).toEqual(scope.plans.length - 3);
-            element.find('i.glyphicon-remove.pull-right').click()
+            element.find('i.remove.icon.pull-right').click()
             expect(getDropdownOptionsLength()).toEqual(scope.plans.length);
         });
 
@@ -237,6 +237,7 @@ describe('multi-Autocomplete', () => {
             $httpBackend.expectGET('web/resources/skills.json');
             expect(element.find('.autocomplete-list').find('li').length).toEqual(plans.length);
             it('should add selected option to selectedPlans array', () => {
+
                 element.find('.autocomplete-list').find('li')[0].click();
                 expect(scope.selectedPlans[0]).toEqual(scope.plans[0]);
                 element.find('.autocomplete-list').find('li')[0].click();

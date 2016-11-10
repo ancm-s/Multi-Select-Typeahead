@@ -29,7 +29,7 @@ describe('multi-Autocomplete', function () {
             expect(scope.all).toEqual(["Awesome Plan", "Not so Awesome Plan"]);
         });
         it('should contain clear all selected icon when clear-all option is true', function () {
-            expect(element.find('i.glyphicon-remove.pull-right')).toExist();
+            expect(element.find('i.remove.icon.pull-right')).toExist();
         });
         it('input should have placeholder if provided in options', function () {
             expect(element.find('input')).toHaveAttr('placeholder', scope.placeholder);
@@ -149,7 +149,7 @@ describe('multi-Autocomplete', function () {
             element.find('.autocomplete-list').find('li')[0].click();
             element.find('.autocomplete-list').find('li')[0].click();
             expect(getDropdownOptionsLength()).toEqual(scope.plans.length - 3);
-            element.find('i.glyphicon-remove.pull-right').click();
+            element.find('i.remove.icon.pull-right').click();
             expect(getDropdownOptionsLength()).toEqual(scope.plans.length);
         });
     });

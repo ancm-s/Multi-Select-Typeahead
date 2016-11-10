@@ -12,6 +12,7 @@ var multiSelectAutocomplete;
             this.isFocused = false;
             this.showInput = true;
             this.showOptionList = true;
+            this.debounce = 500;
             this.keys = {
                 38: 'up',
                 40: 'down',
@@ -39,6 +40,9 @@ var multiSelectAutocomplete;
                 _this.isFocused = false;
             };
             this.onChange = function () {
+                if (_this.apiUrl && _this.apiUrl !== "") {
+                    _this.getSuggestionsList(_this.inputValue);
+                }
                 _this.selectedItemIndex = 0;
             };
             this.shouldShowInput = function () {
@@ -62,8 +66,8 @@ var multiSelectAutocomplete;
                 }
                 return duplicate;
             };
-            this.getSuggestionsList = function () {
-                var url = _this.apiUrl;
+            this.getSuggestionsList = function (input) {
+                var url = _this.apiUrl + "?" + _this.apiSearchKey + "=" + input;
                 _this.$http({
                     method: 'GET',
                     url: url
@@ -71,6 +75,7 @@ var multiSelectAutocomplete;
                     _this.$log.log(response);
                     _this.suggestionsArr = response.data;
                 }).catch(function (response) {
+                    _this.suggestionsArr = _this.suggestionsArr;
                     _this.$log.log("MultiSelect typeahead ----- Unable to fetch list");
                 });
             };
@@ -79,8 +84,7 @@ var multiSelectAutocomplete;
             }
             if (!this.suggestionsArr || this.suggestionsArr === "") {
                 if (this.apiUrl && this.apiUrl !== "") {
-                    console.log(this.apiUrl);
-                    this.getSuggestionsList();
+                    this.getSuggestionsList('');
                 }
                 else {
                     $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
@@ -95,6 +99,9 @@ var multiSelectAutocomplete;
                 var selectedValueIndex = this.modelArr.indexOf(selectedValue);
                 if (selectedValueIndex !== -1)
                     this.modelArr.splice(selectedValueIndex, 1);
+            }
+            if (this.alertSelected) {
+                this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
             this.shouldShowInput();
         };
@@ -123,8 +130,13 @@ var multiSelectAutocomplete;
         MultiAutocompleteCtrl.prototype.keyParser = function ($event) {
             var key = this.keys[$event.keyCode];
             if (key === 'backspace' && this.inputValue === "") {
-                if (this.modelArr.length != 0)
+                if (this.modelArr.length != 0) {
+                    var removedValue = this.modelArr[this.modelArr.length - 1];
                     this.modelArr.pop();
+                    if (this.alertSelected) {
+                        this.alertSelected({ single: removedValue, all: this.modelArr });
+                    }
+                }
             }
             else if (key === 'down') {
                 var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);

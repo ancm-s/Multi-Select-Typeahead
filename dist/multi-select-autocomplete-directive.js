@@ -23,7 +23,9 @@ var multiSelectAutocomplete;
                 clearAll: '=?',
                 closeOnSelect: '=?',
                 sortBy: '=?',
-                alertSelected: '&?'
+                alertSelected: '&?',
+                debounce: '=?',
+                apiSearchKey: '=?'
             };
         }
         return MultiAutocompleteDirective;
