@@ -9,13 +9,14 @@ module multiSelectAutocomplete {
         multiple: number;
         suggestionsArr: any;
         inputValue: string;
+        objectProperty: string;
         selectedItemIndex: number = 0;
         isHover: Boolean = false;
         isFocused: Boolean = false;
         showInput: Boolean = true;
         showOptionList: Boolean = true;
         alertSelected: any;
-        debounce: number = 500;
+        debounce: number = 600;
         apiSearchKey: string;
         private keys = {
             38: 'up',
@@ -58,6 +59,7 @@ module multiSelectAutocomplete {
             if (this.alertSelected) {
                 this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
+            selectedValue.visible = true;
             this.shouldShowInput();
         };
 
@@ -79,6 +81,7 @@ module multiSelectAutocomplete {
             if (this.alertSelected) {
                 this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
+            selectedValue.visible = false;
             this.shouldShowInput();
         };
 
@@ -87,26 +90,37 @@ module multiSelectAutocomplete {
             if (key === 'backspace' && this.inputValue === "") {
                 if (this.modelArr.length != 0) {
                     const removedValue = this.modelArr[this.modelArr.length - 1];
+                    removedValue.visible = true;
                     this.modelArr.pop();
                     if (this.alertSelected) {
                         this.alertSelected({ single: removedValue, all: this.modelArr });
                     }
                 }
             } else if (key === 'down') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
-                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
-                if (this.selectedItemIndex < filteredSuggestionArr.length - 1)
-                    this.selectedItemIndex++;
+                var i = this.selectedItemIndex + 1;
+                while (this.suggestionsArr[i]) {
+                    if (this.suggestionsArr[i].visible) {
+                        this.selectedItemIndex = i;
+                        break
+                    } else {
+                        i++
+                    }
+                }
             } else if (key === 'up' && this.selectedItemIndex > 0) {
-                this.selectedItemIndex--;
+              var i = this.selectedItemIndex - 1;
+              while (this.suggestionsArr[i]) {
+                  if (this.suggestionsArr[i].visible) {
+                      this.selectedItemIndex = i;
+                      break
+                  } else {
+                      i--
+                  }
+              }
             } else if (key === 'esc') {
                 this.isHover = false;
                 this.isFocused = false;
             } else if (key === 'enter') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
-                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
-                if (this.selectedItemIndex < filteredSuggestionArr.length)
-                    this.onSuggestedItemsClick(filteredSuggestionArr[this.selectedItemIndex]);
+                this.onSuggestedItemsClick(this.suggestionsArr[this.selectedItemIndex]);
             }
         };
 
@@ -141,8 +155,19 @@ module multiSelectAutocomplete {
             if (this.apiUrl && this.apiUrl !== "") {
                 this.getSuggestionsList(this.inputValue);
             }
+            this.filterSuggestions(this.inputValue);
             this.selectedItemIndex = 0;
         };
+
+        filterSuggestions = (inputValue): void => {
+            angular.forEach(this.suggestionsArr, dat => {
+                if (!dat[this.objectProperty].toLowerCase().includes(inputValue.toLowerCase())) {
+                    dat.visible = false;
+                } else {
+                    dat.visible = true;
+                }
+            });
+        }
 
         shouldShowInput = (): void => {
             if (this.multiple) {

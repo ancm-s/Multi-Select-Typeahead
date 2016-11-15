@@ -6,6 +6,12 @@ var multiSelectAutocomplete;
                 scope['isRequired'] = attr['required'];
                 scope['errMsgRequired'] = attr['errMsgRequired'];
                 scope['name'] = attr['name'];
+                scope.$watch('vm.suggestionsArr', function (n, old) {
+                    angular.forEach(n, function (sug, i) {
+                        sug._id = i;
+                        sug.visible = true;
+                    });
+                });
             };
             this.restrict = 'E';
             this.templateUrl = "multi-select-autocomplete.html";

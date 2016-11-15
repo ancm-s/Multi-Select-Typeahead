@@ -1,8 +1,12 @@
 (function () {
 
-    angular.module('multiSelectAutocomplete').controller('homeController', function ($scope) {
+    angular.module('multiSelectAutocomplete').controller('homeController', function ($scope, $http) {
         $scope.apiPath = "web/resources/skills.json";
         $scope.skills = [];
+        $http.get('web/resources/changerules.json').then(function(da) {
+          $scope.changeRules = da.data;
+        });
+
         $scope.skillsList = [
             {id: 1, name : "plan A"},
             {id: 2, name : "Plan B"},

@@ -1,18 +1,18 @@
 module multiSelectAutocomplete {
     interface IScopeOptions {
-      placeholder: string,
-      modelArr: string,
-      apiUrl: string,
-      suggestionsArr: string,
-      objectProperty: string,
-      disable: string,
-      multiple: string,
-      clearAll:string,
-      closeOnSelect:string,
-      sortBy:string,
-      alertSelected:string,
-      debounce: string
-      apiSearchKey: string
+        placeholder: string,
+        modelArr: string,
+        apiUrl: string,
+        suggestionsArr: string,
+        objectProperty: string,
+        disable: string,
+        multiple: string,
+        clearAll: string,
+        closeOnSelect: string,
+        sortBy: string,
+        alertSelected: string,
+        debounce: string
+        apiSearchKey: string
     }
 
 
@@ -22,6 +22,12 @@ module multiSelectAutocomplete {
             scope['isRequired'] = attr['required'];
             scope['errMsgRequired'] = attr['errMsgRequired'];
             scope['name'] = attr['name'];
+            scope.$watch('vm.suggestionsArr', (n, old) => {
+                angular.forEach(n, (sug, i) => {
+                    sug._id = i;
+                    sug.visible = true;
+                });
+            });
         };
 
         restrict: string = 'E';

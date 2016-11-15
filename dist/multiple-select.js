@@ -1,4 +1,4 @@
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("multi-select-autocomplete.html","<div class=\"ng-ms form-item-container\">\n  <div class=\"list-line-container\">\n    <ul class=\"list-line\">\n        <li ng-repeat=\"item in vm.modelArr\" class=\"select-inline\">\n            <span class=\"selected-item\" ng-if=\"vm.objectProperty == undefined || vm.objectProperty == \'\'\">\n              <span class=\"remove\" ng-click=\"vm.removeAddedValues(item)\">\n                <i class=\"remove icon\"></i>\n              </span>&nbsp;\n\n                {{item}}\n            </span>\n            <span ng-if=\"vm.objectProperty != undefined && vm.objectProperty != \'\'\">\n              <span class=\"remove\" ng-click=\"vm.removeAddedValues(item)\">\n                <i class=\"remove icon\"></i>\n              </span>&nbsp;\n\n                {{item[vm.objectProperty]}}\n            </span>\n        </li>\n        <li ng-if=\"vm.showInput\" class=\"list-input\">\n            <input\n                name=\"{{name}}\"\n                ng-model=\"vm.inputValue\"\n                placeholder=\"{{vm.placeholder}}\"\n                class=\"select_input\"\n                ng-keydown=\"vm.keyParser($event)\"\n                err-msg-required=\"{{errMsgRequired}}\"\n                ng-disabled=\"vm.disable\"\n                ng-focus=\"vm.onFocus()\"\n                ng-blur=\"vm.onBlur()\"\n                ng-required=\"!vm.modelArr.length && isRequired\"\n                ng-model-options=\"{ debounce: vm.debounce }\"\n                ng-change=\"vm.onChange()\">\n                <div class=\"remove-all-icon\" ng-if=\"vm.clearAll\">\n                  <i class=\"remove icon pull-right\"  ng-click=\"vm.removeAll()\"></i>\n                </div>\n        </li>\n\n    </ul>\n  </div>\n\n\n    <div ng-if=\"vm.showOptionList && vm.suggestionsArr\" class=\"autocomplete-list\" ng-show=\"vm.isFocused || vm.isHover\" ng-mouseenter=\"vm.onMouseEnter()\" ng-mouseleave=\"vm.onMouseLeave()\">\n        <ul>\n            <li ng-class=\"{\'autocomplete-active\' : vm.selectedItemIndex == $index}\"\n            ng-repeat=\"suggestion in vm.suggestionsArr | filter : vm.inputValue | filter : vm.alreadyAddedValues\"\n            ng-click=\"vm.onSuggestedItemsClick(suggestion)\"\n            ng-mouseenter=\"vm.mouseEnterOnItem($index)\">\n                <span ng-if=\"vm.objectProperty == undefined || vm.objectProperty == \'\'\">{{suggestion}}</span>\n                <span ng-if=\"vm.objectProperty != undefined && vm.objectProperty != \'\'\">{{suggestion[vm.objectProperty]}}</span>\n            </li>\n        </ul>\n    </div>\n\n</div>\n");}]);
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("multi-select-autocomplete.html","<div class=\"ng-ms form-item-container\">\n  <div class=\"list-line-container\">\n    <ul class=\"list-line\">\n        <li ng-repeat=\"item in vm.modelArr\" class=\"select-inline\">\n            <span class=\"selected-item\" ng-if=\"vm.objectProperty == undefined || vm.objectProperty == \'\'\">\n              <span class=\"remove\" ng-click=\"vm.removeAddedValues(item)\">\n                <i class=\"remove icon\"></i>\n              </span>&nbsp;\n\n                {{item}}\n            </span>\n            <span ng-if=\"vm.objectProperty != undefined && vm.objectProperty != \'\'\">\n              <span class=\"remove\" ng-click=\"vm.removeAddedValues(item)\">\n                <i class=\"remove icon\"></i>\n              </span>&nbsp;\n\n                {{item[vm.objectProperty]}}\n            </span>\n        </li>\n        <li ng-if=\"vm.showInput\" class=\"list-input\">\n            <input\n                name=\"{{name}}\"\n                ng-model=\"vm.inputValue\"\n                placeholder=\"{{vm.placeholder}}\"\n                class=\"select_input\"\n                ng-keydown=\"vm.keyParser($event)\"\n                err-msg-required=\"{{errMsgRequired}}\"\n                ng-disabled=\"vm.disable\"\n                ng-focus=\"vm.onFocus()\"\n                ng-blur=\"vm.onBlur()\"\n                ng-required=\"!vm.modelArr.length && isRequired\"\n                ng-model-options=\"{ debounce: vm.debounce }\"\n                ng-change=\"vm.onChange()\">\n                <div class=\"remove-all-icon\" ng-if=\"vm.clearAll\">\n                  <i class=\"remove icon pull-right\"  ng-click=\"vm.removeAll()\"></i>\n                </div>\n        </li>\n\n    </ul>\n  </div>\n\n\n    <div ng-if=\"vm.showOptionList && vm.suggestionsArr\" class=\"autocomplete-list\" ng-show=\"vm.isFocused || vm.isHover\" ng-mouseenter=\"vm.onMouseEnter()\" ng-mouseleave=\"vm.onMouseLeave()\">\n        <ul>\n            <li ng-class=\"{\'autocomplete-active\' : vm.selectedItemIndex == $index}\"\n            ng-if=\"suggestion.visible\"\n            ng-repeat=\"suggestion in vm.suggestionsArr track by suggestion._id\"\n            ng-click=\"vm.onSuggestedItemsClick(suggestion)\"\n            ng-mouseenter=\"vm.mouseEnterOnItem($index)\">\n                <span ng-if=\"vm.objectProperty == undefined || vm.objectProperty == \'\'\">{{suggestion}}</span>\n                <span ng-if=\"vm.objectProperty != undefined && vm.objectProperty != \'\'\">{{suggestion[vm.objectProperty]}}</span>\n            </li>\n        </ul>\n    </div>\n\n</div>\n");}]);
 var multiSelectAutocomplete;
 (function (multiSelectAutocomplete) {
     var MultiAutocompleteDirective = (function () {
@@ -7,6 +7,12 @@ var multiSelectAutocomplete;
                 scope['isRequired'] = attr['required'];
                 scope['errMsgRequired'] = attr['errMsgRequired'];
                 scope['name'] = attr['name'];
+                scope.$watch('vm.suggestionsArr', function (n, old) {
+                    angular.forEach(n, function (sug, i) {
+                        sug._id = i;
+                        sug.visible = true;
+                    });
+                });
             };
             this.restrict = 'E';
             this.templateUrl = "multi-select-autocomplete.html";
@@ -37,7 +43,6 @@ var multiSelectAutocomplete;
 })(multiSelectAutocomplete || (multiSelectAutocomplete = {}));
 ;
 //# sourceMappingURL=multi-select-autocomplete-directive.js.map
-
 var multiSelectAutocomplete;
 (function (multiSelectAutocomplete) {
     var MultiAutocompleteCtrl = (function () {
@@ -52,7 +57,7 @@ var multiSelectAutocomplete;
             this.isFocused = false;
             this.showInput = true;
             this.showOptionList = true;
-            this.debounce = 500;
+            this.debounce = 600;
             this.keys = {
                 38: 'up',
                 40: 'down',
@@ -83,7 +88,18 @@ var multiSelectAutocomplete;
                 if (_this.apiUrl && _this.apiUrl !== "") {
                     _this.getSuggestionsList(_this.inputValue);
                 }
+                _this.filterSuggestions(_this.inputValue);
                 _this.selectedItemIndex = 0;
+            };
+            this.filterSuggestions = function (inputValue) {
+                angular.forEach(_this.suggestionsArr, function (dat) {
+                    if (!dat[_this.objectProperty].toLowerCase().includes(inputValue.toLowerCase())) {
+                        dat.visible = false;
+                    }
+                    else {
+                        dat.visible = true;
+                    }
+                });
             };
             this.shouldShowInput = function () {
                 if (_this.multiple) {
@@ -143,6 +159,7 @@ var multiSelectAutocomplete;
             if (this.alertSelected) {
                 this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
+            selectedValue.visible = true;
             this.shouldShowInput();
         };
         ;
@@ -164,6 +181,7 @@ var multiSelectAutocomplete;
             if (this.alertSelected) {
                 this.alertSelected({ single: selectedValue, all: this.modelArr });
             }
+            selectedValue.visible = false;
             this.shouldShowInput();
         };
         ;
@@ -172,6 +190,7 @@ var multiSelectAutocomplete;
             if (key === 'backspace' && this.inputValue === "") {
                 if (this.modelArr.length != 0) {
                     var removedValue = this.modelArr[this.modelArr.length - 1];
+                    removedValue.visible = true;
                     this.modelArr.pop();
                     if (this.alertSelected) {
                         this.alertSelected({ single: removedValue, all: this.modelArr });
@@ -179,23 +198,35 @@ var multiSelectAutocomplete;
                 }
             }
             else if (key === 'down') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
-                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
-                if (this.selectedItemIndex < filteredSuggestionArr.length - 1)
-                    this.selectedItemIndex++;
+                var i = this.selectedItemIndex + 1;
+                while (this.suggestionsArr[i]) {
+                    if (this.suggestionsArr[i].visible) {
+                        this.selectedItemIndex = i;
+                        break;
+                    }
+                    else {
+                        i++;
+                    }
+                }
             }
             else if (key === 'up' && this.selectedItemIndex > 0) {
-                this.selectedItemIndex--;
+                var i = this.selectedItemIndex - 1;
+                while (this.suggestionsArr[i]) {
+                    if (this.suggestionsArr[i].visible) {
+                        this.selectedItemIndex = i;
+                        break;
+                    }
+                    else {
+                        i--;
+                    }
+                }
             }
             else if (key === 'esc') {
                 this.isHover = false;
                 this.isFocused = false;
             }
             else if (key === 'enter') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
-                filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
-                if (this.selectedItemIndex < filteredSuggestionArr.length)
-                    this.onSuggestedItemsClick(filteredSuggestionArr[this.selectedItemIndex]);
+                this.onSuggestedItemsClick(this.suggestionsArr[this.selectedItemIndex]);
             }
         };
         ;
