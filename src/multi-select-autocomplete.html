@@ -1,6 +1,6 @@
 <div class="ng-ms form-item-container">
   <div class="list-line-container">
-    <ul class="list-line">
+    <ul class="list-line" ng-class="{'disable' : vm.disable}">
         <li ng-repeat="item in vm.modelArr" class="select-inline">
             <span class="selected-item" ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">
               <span class="remove" ng-click="vm.removeAddedValues(item)">
