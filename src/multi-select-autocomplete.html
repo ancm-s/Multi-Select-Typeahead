@@ -40,10 +40,10 @@
   </div>
 
 
-    <div ng-if="vm.showOptionList && vm.suggestionsArr" class="autocomplete-list" ng-show="vm.isFocused || vm.isHover" ng-mouseenter="vm.onMouseEnter()" ng-mouseleave="vm.onMouseLeave()">
+    <div ng-if="vm.showOptionList && vm.formatedSuggestionsArr" class="autocomplete-list" ng-show="vm.isFocused || vm.isHover" ng-mouseenter="vm.onMouseEnter()" ng-mouseleave="vm.onMouseLeave()">
         <ul>
             <li ng-class="{'autocomplete-active' : vm.selectedItemIndex == $index}"
-            ng-repeat="suggestion in vm.suggestionsArr | filter : vm.inputValue | filter : vm.alreadyAddedValues"
+            ng-repeat="suggestion in vm.formatedSuggestionsArr | filter : vm.inputValue | filter : vm.alreadyAddedValues"
             ng-click="vm.onSuggestedItemsClick(suggestion)"
             ng-mouseenter="vm.mouseEnterOnItem($index)">
                 <span ng-if="vm.objectProperty == undefined || vm.objectProperty == ''">{{suggestion}}</span>

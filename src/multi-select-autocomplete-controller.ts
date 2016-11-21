@@ -7,6 +7,7 @@ module multiSelectAutocomplete {
         apiUrl: string;
         sortBy: string;
         multiple: number;
+        formatedSuggestionsArr: any;
         suggestionsArr: any;
         inputValue: string;
         selectedItemIndex: number = 0;
@@ -36,7 +37,7 @@ module multiSelectAutocomplete {
                 this.modelArr = [];
             }
 
-            if (!this.suggestionsArr || this.suggestionsArr === "") {
+            if (!this.formatedSuggestionsArr || this.formatedSuggestionsArr === "") {
                 if (this.apiUrl && this.apiUrl !== "") {
                     this.getSuggestionsList('');
                 }
@@ -44,9 +45,7 @@ module multiSelectAutocomplete {
                     $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
                 }
             }
-            if (this.sortBy && this.sortBy !== "") {
-                this.suggestionsArr = this.$filter('orderBy')(this.suggestionsArr, this.sortBy);
-            }
+
         }
 
         removeAddedValues(selectedValue): void {
@@ -93,7 +92,7 @@ module multiSelectAutocomplete {
                     }
                 }
             } else if (key === 'down') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                var filteredSuggestionArr = this.$filter('filter')(this.formatedSuggestionsArr, this.inputValue);
                 filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
                 if (this.selectedItemIndex < filteredSuggestionArr.length - 1)
                     this.selectedItemIndex++;
@@ -103,7 +102,7 @@ module multiSelectAutocomplete {
                 this.isHover = false;
                 this.isFocused = false;
             } else if (key === 'enter') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                var filteredSuggestionArr = this.$filter('filter')(this.formatedSuggestionsArr, this.inputValue);
                 filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
                 if (this.selectedItemIndex < filteredSuggestionArr.length)
                     this.onSuggestedItemsClick(filteredSuggestionArr[this.selectedItemIndex]);
@@ -149,8 +148,8 @@ module multiSelectAutocomplete {
                 this.showInput = this.modelArr.length >= this.multiple ? false : true;
                 this.showOptionList = this.modelArr.length >= this.multiple ? false : true;
             } else {
-                this.showInput = this.modelArr.length === this.suggestionsArr.length ? false : true;
-                this.showOptionList = this.modelArr.length === this.suggestionsArr.length ? false : true;
+                this.showInput = this.modelArr.length === this.formatedSuggestionsArr.length ? false : true;
+                this.showOptionList = this.modelArr.length === this.formatedSuggestionsArr.length ? false : true;
             }
         }
         isDuplicate = (arr, item) => {
@@ -172,9 +171,9 @@ module multiSelectAutocomplete {
                 url: url
             }).then((response): void => {
                 this.$log.log(response);
-                this.suggestionsArr = response.data;
+                this.formatedSuggestionsArr = response.data;
             }).catch((response): void => {
-                this.suggestionsArr = this.suggestionsArr;
+                this.formatedSuggestionsArr = this.formatedSuggestionsArr;
                 this.$log.log("MultiSelect typeahead ----- Unable to fetch list");
             });
         };

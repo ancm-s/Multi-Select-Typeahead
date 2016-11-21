@@ -6,6 +6,16 @@ var multiSelectAutocomplete;
                 scope['isRequired'] = attr['required'];
                 scope['errMsgRequired'] = attr['errMsgRequired'];
                 scope['name'] = attr['name'];
+                scope.$watch('vm.suggestionsArr', function (n) {
+                    if (n) {
+                        if (scope['vm'].sortBy && scope['vm'].sortBy !== "") {
+                            scope['vm'].formatedSuggestionsArr = scope['vm'].$filter('orderBy')(scope['vm'].suggestionsArr, scope['vm'].sortBy);
+                        }
+                        else {
+                            scope['vm'].formatedSuggestionsArr = scope['vm'].suggestionsArr;
+                        }
+                    }
+                });
             };
             this.restrict = 'E';
             this.templateUrl = "multi-select-autocomplete.html";

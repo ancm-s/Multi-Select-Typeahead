@@ -51,8 +51,8 @@ var multiSelectAutocomplete;
                     _this.showOptionList = _this.modelArr.length >= _this.multiple ? false : true;
                 }
                 else {
-                    _this.showInput = _this.modelArr.length === _this.suggestionsArr.length ? false : true;
-                    _this.showOptionList = _this.modelArr.length === _this.suggestionsArr.length ? false : true;
+                    _this.showInput = _this.modelArr.length === _this.formatedSuggestionsArr.length ? false : true;
+                    _this.showOptionList = _this.modelArr.length === _this.formatedSuggestionsArr.length ? false : true;
                 }
             };
             this.isDuplicate = function (arr, item) {
@@ -73,25 +73,22 @@ var multiSelectAutocomplete;
                     url: url
                 }).then(function (response) {
                     _this.$log.log(response);
-                    _this.suggestionsArr = response.data;
+                    _this.formatedSuggestionsArr = response.data;
                 }).catch(function (response) {
-                    _this.suggestionsArr = _this.suggestionsArr;
+                    _this.formatedSuggestionsArr = _this.formatedSuggestionsArr;
                     _this.$log.log("MultiSelect typeahead ----- Unable to fetch list");
                 });
             };
             if (this.modelArr === null || this.modelArr === "" || this.modelArr === undefined) {
                 this.modelArr = [];
             }
-            if (!this.suggestionsArr || this.suggestionsArr === "") {
+            if (!this.formatedSuggestionsArr || this.formatedSuggestionsArr === "") {
                 if (this.apiUrl && this.apiUrl !== "") {
                     this.getSuggestionsList('');
                 }
                 else {
                     $log.log("MultiSelect typeahead ----- Please provide suggestion array list or url");
                 }
-            }
-            if (this.sortBy && this.sortBy !== "") {
-                this.suggestionsArr = this.$filter('orderBy')(this.suggestionsArr, this.sortBy);
             }
         }
         MultiAutocompleteCtrl.prototype.removeAddedValues = function (selectedValue) {
@@ -139,7 +136,7 @@ var multiSelectAutocomplete;
                 }
             }
             else if (key === 'down') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                var filteredSuggestionArr = this.$filter('filter')(this.formatedSuggestionsArr, this.inputValue);
                 filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
                 if (this.selectedItemIndex < filteredSuggestionArr.length - 1)
                     this.selectedItemIndex++;
@@ -152,7 +149,7 @@ var multiSelectAutocomplete;
                 this.isFocused = false;
             }
             else if (key === 'enter') {
-                var filteredSuggestionArr = this.$filter('filter')(this.suggestionsArr, this.inputValue);
+                var filteredSuggestionArr = this.$filter('filter')(this.formatedSuggestionsArr, this.inputValue);
                 filteredSuggestionArr = this.$filter('filter')(filteredSuggestionArr, this.alreadyAddedValues);
                 if (this.selectedItemIndex < filteredSuggestionArr.length)
                     this.onSuggestedItemsClick(filteredSuggestionArr[this.selectedItemIndex]);
